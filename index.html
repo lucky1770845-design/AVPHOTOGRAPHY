@@ -41,7 +41,18 @@ h2{font-size:clamp(1.7rem,6vw,2.4rem);margin:.2em 0 .5em}.rule{width:60px;height
 .ph{aspect-ratio:4/3;background:linear-gradient(135deg,#e4d6bf,#f1e6d3);width:100%}
 .tabs{display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}.tabs button{background:none;border:0;border-bottom:1px solid transparent;font:inherit;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mut);padding:6px 10px;cursor:pointer}.tabs .on{color:var(--acc);border-color:var(--gold)}
 .mas{columns:2 150px;column-gap:8px}.mas>*{width:100%;margin:0 0 8px;break-inside:avoid;display:block;border-radius:3px}.mas img{height:auto}
-.rv{opacity:0;transform:translateY(28px);transition:opacity .9s,transform .9s}.rv.in{opacity:1;transform:none}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}.rv.in{opacity:1;transform:none}
+.sec-header{position:relative;margin:0 auto 28px;text-align:center}
+.sec-header.l{text-align:left}
+.sec-header .eyebrow{display:inline-block;opacity:0;transform:translateY(18px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);letter-spacing:.28em}
+.sec-header h2{opacity:0;transform:translateY(30px);transition:opacity .95s cubic-bezier(.16,1,.3,1) .12s,transform .95s cubic-bezier(.16,1,.3,1) .12s}
+.sec-header .rule{width:0;opacity:0;height:1px;background:var(--gold);margin:10px auto 20px;transition:width 1s cubic-bezier(.22,1,.36,1) .28s,opacity .75s ease .28s}
+.sec-header.l .rule{margin-left:0}
+.sec-header .sec-desc{opacity:0;transform:translateY(20px);transition:opacity .9s cubic-bezier(.16,1,.3,1) .36s,transform .9s cubic-bezier(.16,1,.3,1) .36s}
+.sec-header.in .eyebrow{opacity:1;transform:translateY(0)}
+.sec-header.in h2{opacity:1;transform:translateY(0)}
+.sec-header.in .rule{width:64px;opacity:1}
+.sec-header.in .sec-desc{opacity:1;transform:translateY(0)}
 input,textarea,select{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);padding:9px;width:100%}
 form{display:grid;gap:10px}.fc{background:var(--card);border:1px solid var(--line);padding:20px;max-width:560px;margin:0 auto}
 label{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:6px 0 2px}
@@ -49,96 +60,1509 @@ footer{background:var(--dk);color:#d9cfc1;padding:36px 18px;font-size:.85rem}foo
 #wa{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:19;width:48px;height:48px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.4rem;box-shadow:0 4px 14px #0004;animation:pl 2.4s infinite}
 @keyframes pl{50%{box-shadow:0 0 0 12px #25d36622}}
 #fab{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:25}
-#adm{position:fixed;inset:0;background:var(--bg);z-index:40;overflow:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 80px}
-.hide{display:none!important}.r{display:grid;gap:6px;border:1px solid var(--line);padding:10px;margin-bottom:8px}
-.adm label{margin-top:8px}.top{display:flex;gap:6px;position:sticky;top:0;background:var(--bg);padding:6px 0;flex-wrap:wrap;z-index:2}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#adm{position:fixed;inset:0;background:var(--bg);z-index:40;overflow-y:auto;overflow-x:hidden;padding:0 0 100px 0;color:var(--fg)}
+.hide{display:none!important}
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--dk);color:#fff;padding:12px 24px;border-radius:40px;box-shadow:0 12px 36px rgba(0,0,0,.35);font-size:.85rem;z-index:9999;transition:transform .35s cubic-bezier(.175,.885,.32,1.275);border:1px solid var(--gold);pointer-events:none;display:flex;align-items:center;gap:8px}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.adm-bar{position:sticky;top:0;z-index:30;background:rgba(248,241,230,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.adm-logo{font-family:var(--serif);font-size:1.15rem;color:var(--fg);text-decoration:none;display:flex;flex-direction:column}
+.adm-logo small{font-family:"DM Sans",sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.adm-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.adm-tabs{background:#efe6d8;border-bottom:1px solid var(--line);padding:6px 14px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.adm-tabs::-webkit-scrollbar{display:none}
+.adm-tabs button{background:none;border:0;font-family:inherit;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);padding:8px 12px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:.2s}
+.adm-tabs button:hover{color:var(--fg);background:rgba(0,0,0,.04)}
+.adm-tabs button.on{background:var(--card);color:var(--acc);font-weight:500;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.adm-tabs button .badge{font-size:.65rem;background:rgba(123,30,36,.1);color:var(--acc);padding:2px 6px;border-radius:10px}
+.adm-wrap{max-width:1120px;margin:0 auto;padding:24px 16px}
+.adm-card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px;margin-bottom:20px;box-shadow:0 4px 18px rgba(43,36,32,.03)}
+.adm-card-title{font-family:var(--serif);font-size:1.25rem;margin:0 0 6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.adm-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.adm-hero-prev{border-radius:6px;overflow:hidden;position:relative;min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;background:#262524;border:1px solid var(--line);margin-bottom:14px}
+.adm-hero-prev .bgi{position:absolute;inset:0;background-size:cover;background-position:center}
+.adm-hero-prev .ov{position:absolute;inset:0;background:linear-gradient(#0006,#000a)}
+.adm-hero-prev .hc{position:relative;z-index:2;padding:16px}
+.adm-hero-prev h1{font-size:1.9rem;margin:4px 0}
+.adm-hero-prev p{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin:0}
+.adm-btn-danger{background:none;border:1px solid #d9534f;color:#d9534f;padding:7px 14px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.2s}
+.adm-btn-danger:hover{background:#d9534f;color:#fff}
+.adm-thumb-preview{width:100%;height:140px;background:#e9dfd0;border-radius:4px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;color:var(--mut);border:1px dashed var(--line)}
+.adm-thumb-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.adm-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.adm-kpi{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;text-align:center}
+.adm-kpi b{display:block;font-size:1.6rem;font-family:var(--serif);color:var(--gold)}
+.adm-kpi span{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.adm-pill{display:inline-block;padding:2px 8px;font-size:.65rem;border-radius:4px;letter-spacing:.05em;text-transform:uppercase}
+.ig-section{margin-top:44px;border-top:1px solid rgba(228,214,191,.15);padding-top:36px;text-align:left}
+.ig-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px;flex-wrap:wrap;gap:14px}
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.ig-card{background:rgba(255,250,242,.03);border:1px solid rgba(228,214,191,.18);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:.35s ease;backdrop-filter:blur(6px)}
+.ig-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 14px 32px rgba(0,0,0,.5)}
+.ig-card-top{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(228,214,191,.1);font-size:.75rem}
+.ig-card-user{display:flex;align-items:center;gap:7px;font-weight:500;color:var(--gold);text-decoration:none}
+.ig-card-badge{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:#d9cfc1;opacity:.8}
+.ig-img-wrap{aspect-ratio:1/1;position:relative;overflow:hidden;background:#1b1918}
+.ig-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s ease}
+.ig-card:hover .ig-img-wrap img{transform:scale(1.04)}
+.ig-likes-overlay{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.75);color:#fff;padding:3px 9px;border-radius:14px;font-size:.7rem;display:flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.15)}
+.ig-card-body{padding:16px;display:flex;flex-direction:column;flex:1;justify-content:space-between;gap:14px}
+.ig-caption{font-size:.86rem;line-height:1.6;color:#f3ece2;margin:0;font-style:italic;font-family:var(--serif);opacity:.95}
+.ig-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ig-tag{font-size:.68rem;padding:3px 8px;border-radius:4px;background:rgba(196,154,74,.12);color:var(--gold);text-decoration:none;border:1px solid rgba(196,154,74,.25);transition:.2s;display:inline-block}
+.ig-tag:hover{background:var(--gold);color:#181615;border-color:var(--gold)}
+.ig-btn-link{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:8px;border:1px solid rgba(228,214,191,.2);color:#f3ece2;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:.2s}
+.ig-btn-link:hover{background:var(--gold);color:#181615;border-color:var(--gold)}
+.ig-trending-bar{margin-top:24px;padding:14px 18px;background:rgba(0,0,0,.35);border:1px solid rgba(228,214,191,.15);border-radius:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#25d366;display:inline-block;box-shadow:0 0 8px #25d366;animation:pulse 2s infinite}
+@keyframes pulse{0%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes spin{100%{transform:rotate(360deg)}}
+.gal-dropzone{border:2px dashed var(--gold);border-radius:8px;padding:32px 20px;text-align:center;background:rgba(196,154,74,.04);cursor:pointer;transition:.25s ease;margin-bottom:16px}
+.gal-dropzone:hover,.gal-dropzone.dragover{background:rgba(196,154,74,.1);border-color:var(--acc);transform:scale(.997)}
+.gal-dropzone-icon{font-size:2.2rem;display:block;margin-bottom:8px;color:var(--gold)}
+.batch-queue{display:grid;gap:10px;margin-top:14px}
+.batch-item{display:grid;grid-template-columns:52px 1fr 140px auto;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:6px;padding:10px 14px;box-shadow:0 2px 6px rgba(0,0,0,.02)}
+@media(max-width:640px){.batch-item{grid-template-columns:48px 1fr;grid-template-rows:auto auto;gap:8px}}
+.batch-thumb{width:52px;height:52px;border-radius:4px;overflow:hidden;background:#e9dfd0;position:relative}
+.batch-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.batch-info{overflow:hidden}
+.batch-name{font-size:.82rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--fg);margin-bottom:2px}
+.batch-meta{font-size:.68rem;color:var(--mut);display:flex;gap:8px;align-items:center}
+.batch-progress-wrap{width:100%}
+.batch-bar-bg{height:6px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.batch-bar-fill{height:100%;width:0%;background:var(--gold);border-radius:3px;transition:width .25s ease,background-color .3s}
+.batch-bar-fill.done{background:#25d366}
+.batch-bar-fill.err{background:#d9534f}
+.batch-percent{font-size:.68rem;color:var(--mut);display:flex;justify-content:space-between;align-items:center}
+.batch-status-badge{font-size:.65rem;padding:2px 8px;border-radius:12px;text-transform:uppercase;letter-spacing:.05em;display:inline-flex;align-items:center;gap:4px}
+.batch-status-pending{background:rgba(0,0,0,.06);color:var(--mut)}
+.batch-status-uploading{background:rgba(196,154,74,.15);color:var(--gold)}
+.batch-status-done{background:rgba(37,211,102,.15);color:#128c7e;font-weight:500}
+.batch-status-error{background:rgba(217,83,79,.15);color:#d9534f}
+.overall-bar-bg{height:8px;background:rgba(0,0,0,.08);border-radius:4px;overflow:hidden;margin:8px 0 14px}
+.overall-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#e5b966);border-radius:4px;transition:width .3s ease}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.sec-header .eyebrow,.sec-header h2,.sec-header .rule,.sec-header .sec-desc{opacity:1!important;transform:none!important;width:64px!important}}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script></head><body>
+<div id="toast"></div>
 <header id="nav"></header><a id="wa" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
 <div id="app"></div>
 <div id="adm" class="hide adm"></div>
-<script id="data" type="application/json">{"brand":"AV Photography","by":"Jhansi","tag":"Wedding · Pre-Wedding · Portraits · Events","sub":"Luxury photography in Jhansi","hero":"","video":"","about":"We are a small, soul-led studio in Jhansi crafting cinematic frames that feel like memory itself. Candid meets classical, tradition meets editorial. (Edit this text in Admin.)","phone":"","email":"","address":"Jhansi, Uttar Pradesh","insta":"https://www.instagram.com/av_photography_jhansi","yt":"","fb":"","stats":[{"n":"300+","l":"Shoots"},{"n":"9+","l":"Years"},{"n":"12","l":"Awards"},{"n":"100%","l":"Happy Clients"}],"reels":[{"t":"Bridal Entry","u":"","img":""},{"t":"Pre-Wedding","u":"","img":""},{"t":"Haldi Highlights","u":"","img":""},{"t":"Couple Portraits","u":"","img":""}],"services":[{"t":"Wedding Photography","d":"Full-day cinematic coverage, edited like a feature film.","p":"Custom","img":""},{"t":"Pre-Wedding Shoots","d":"Story-driven shoots at your favourite locations.","p":"Custom","img":""},{"t":"Candid & Events","d":"Documentary-style coverage for sangeet, birthdays and more.","p":"Custom","img":""},{"t":"Portraits & Baby Shoots","d":"Studio and outdoor sessions, gentle and fun.","p":"Custom","img":""},{"t":"Product & Commercial","d":"Clean, sharp images for brands.","p":"Custom","img":""}],"gallery":[{"u":"","c":"Wedding"},{"u":"","c":"Pre-Wedding"},{"u":"","c":"Candid"},{"u":"","c":"Wedding"}],"reviews":[{"n":"Happy Client","t":"Add real client reviews from the Admin panel."}]}</script>
+<script id="data" type="application/json">{"brand":"AV Photography","by":"Jhansi","tag":"Wedding · Pre-Wedding · Haldi & Rituals · Candid & Portraits","sub":"30K+ Instagram Community · Luxury Photography in Jhansi","hero":"https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=85","video":"","about":"AV Photography (@av_photography_jhansi) is Jhansi's celebrated wedding and cinematic photography studio, trusted by over 30,000 followers and families across Bundelkhand.\n\nLocated near Arya Kanya Chowraha, Sipri Bazar, we capture the raw magic of Indian weddings—from tearful varmala moments and royal bridal entries to energetic haldi celebrations and romantic pre-wedding stories. Ranked 4.8★ with award-winning creative teams, we craft cinematic frames that become family heirlooms.","phone":"919876543210","email":"avphotographyjhansi@gmail.com","address":"Near Arya Kanya Chowraha, Sipri Bazar, Jhansi, Uttar Pradesh","insta":"https://www.instagram.com/av_photography_jhansi","yt":"https://www.youtube.com/@avphotographyjhansi","fb":"https://www.facebook.com/avphotographyjhansi","stats":[{"n":"30K+","l":"Insta Family"},{"n":"300+","l":"Weddings Shot"},{"n":"4.8 ★","l":"Client Rating"},{"n":"9+","l":"Years in Jhansi"}],"reels":[{"t":"Bridal Entry & Makeover","u":"https://www.instagram.com/av_photography_jhansi/reels/","img":"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80"},{"t":"Jhansi Pre-Wedding Magic","u":"https://www.instagram.com/av_photography_jhansi/reels/","img":"https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80"},{"t":"Haldi & Sangeet Madness","u":"https://www.instagram.com/av_photography_jhansi/reels/","img":"https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?auto=format&fit=crop&w=600&q=80"},{"t":"Romantic Couple Vows","u":"https://www.instagram.com/av_photography_jhansi/reels/","img":"https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80"}],"igPosts":[{"id":"post-1","caption":"A regal bridal entry woven with emotional tears, gold kaleeras, and timeless heritage grace in Jhansi. Every candid frame reflects a royal celebration. Congratulations Shreya & Ankit! ✨💍","hashtags":["#BridalEntry","#JhansiWedding","#RoyalBride","#AVPhotography","#IndianWedding"],"date":"2 days ago","likes":"1.8K","img":"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80","url":"https://www.instagram.com/av_photography_jhansi/"},{"id":"post-2","caption":"Golden hour romance among the heritage Orchha chhatris. When two souls speak in effortless laughter, every frame turns into cinematic poetry. Sunset pre-wedding series out now! 🌅📸","hashtags":["#PreWeddingJhansi","#OrchhaDiaries","#SunsetRomance","#CoupleGoals","#CinematicFilm"],"date":"4 days ago","likes":"2.4K","img":"https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80","url":"https://www.instagram.com/av_photography_jhansi/"},{"id":"post-3","caption":"Pure Haldi euphoria! Turmeric splashes, spontaneous dhol beats, and unfiltered happiness with family and cousins. Capturing the authentic warmth of Jhansi weddings. 💛🎊","hashtags":["#HaldiCeremony","#SipriBazar","#CandidMoments","#IndianTraditions","#WeddingJoy"],"date":"6 days ago","likes":"1.2K","img":"https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?auto=format&fit=crop&w=800&q=80","url":"https://www.instagram.com/av_photography_jhansi/"}],"trendingHashtags":["#AVPhotography","#JhansiWedding","#OrchhaPreWedding","#BundelkhandBrides","#HaldiCeremonyJhansi","#SipriBazarShoots","#IndianWeddingPhotographer"],"services":[{"t":"Wedding Photography & Cinematography","d":"Complete multi-day wedding coverage edited like a feature film with drone sweeps, candid photojournalism, and luxury heirloom photobooks.","p":"₹25,000","img":"https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80"},{"t":"Pre-Wedding Cinematic Shoots","d":"Story-driven, romantic pre-wedding shoots at scenic forts, gardens, and heritage spots across Jhansi, Orchha & Gwalior.","p":"₹15,000","img":"https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80"},{"t":"Engagement & Ring Ceremony","d":"Candid photojournalism capturing your first official celebration with families, exchanged rings, and authentic smiles.","p":"₹12,000","img":"https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"},{"t":"Haldi, Mehndi & Sangeet Moments","d":"Vibrant, high-energy documentary coverage capturing natural laughter, vibrant turmeric splashes, and late-night dance battles.","p":"₹15,000","img":"https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?auto=format&fit=crop&w=800&q=80"},{"t":"Maternity & Newborn Portraits","d":"Gentle, heartfelt indoor studio and outdoor natural-light sessions honoring baby milestones and motherhood.","p":"₹10,000","img":"https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80"},{"t":"Fashion & Commercial Portfolios","d":"Editorial-grade lighting and clean styling for models, bridal makeup artists, brands, and creative portfolios in Jhansi.","p":"Custom","img":"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"}],"gallery":[{"u":"https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80","c":"Wedding"},{"u":"https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80","c":"Wedding"},{"u":"https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=80","c":"Pre-Wedding"},{"u":"https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?auto=format&fit=crop&w=1200&q=80","c":"Candid"},{"u":"https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80","c":"Wedding"},{"u":"https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80","c":"Pre-Wedding"},{"u":"https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80","c":"Wedding"},{"u":"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80","c":"Portraits"}],"reviews":[{"n":"Priya & Ankit Sachan","t":"AV Photography captured our wedding in Jhansi so magically! Every candid glance, the varmala emotions, and our cinematic teaser gave the entire family goosebumps. Best wedding photographers in Sipri Bazar!"},{"n":"Shreya & Rahul Yadav","t":"We did our pre-wedding shoot with the AV Photography team and it was such a fun, relaxed experience. They guided our poses naturally and delivered magazine-worthy shots. Highly recommended in Jhansi!"},{"n":"Rohan & Deepa","t":"The team covered our Haldi and Sangeet ceremony. The colors, warmth, and lighting were captured with absolute perfection. True professionals with great equipment and creative direction."}]}</script>
 <script>
-const SB=window.supabase?window.supabase.createClient("https://hbiotxqwhuvwfclesbzf.supabase.co","sb_publishable_rHC2arL3jAKkWButFfxz1Q_hoa16Ve0"):null;
+function safeGet(k, def=""){try{return localStorage.getItem(k)||def}catch(e){return def}}
+function safeSet(k, v){try{localStorage.setItem(k,v)}catch(e){}}
+
+let sbUrl = safeGet("sb_url", "https://hbiotxqwhuvwfclesbzf.supabase.co");
+let sbKey = safeGet("sb_key", "sb_publishable_rHC2arL3jAKkWButFfxz1Q_hoa16Ve0");
+let SB = null;
+
+function initSupabase(u, k) {
+  if (!window.supabase || !u || !k) return null;
+  try {
+    sbUrl = u.trim();
+    sbKey = k.trim();
+    safeSet("sb_url", sbUrl);
+    safeSet("sb_key", sbKey);
+    SB = window.supabase.createClient(sbUrl, sbKey);
+    return SB;
+  } catch (err) {
+    console.warn("Failed to initialize Supabase:", err);
+    return null;
+  }
+}
+initSupabase(sbUrl, sbKey);
+
 const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let D=JSON.parse($("#data").textContent),cat="All",A=null,items=[],col=null,tab="Site";
+
+let D = {};
+try {
+  const el = $("#data");
+  if (el && el.textContent) {
+    D = JSON.parse(el.textContent.trim());
+  }
+} catch (e) {
+  console.warn("Error parsing data JSON:", e);
+}
+D.stats = D.stats || [];
+D.reels = D.reels || [];
+D.services = D.services || [];
+D.gallery = D.gallery || [];
+D.reviews = D.reviews || [];
+D.igPosts = D.igPosts || [];
+D.trendingHashtags = D.trendingHashtags || [];
+
+let cat="All",A=null,items=[],col=null,tab="Site";
 const wa=(m)=>{const d=String(D.phone).replace(/\D/g,"");return d?"https://wa.me/"+(d.length==10?"91"+d:d)+"?text="+encodeURIComponent(m):"#contact"};
 const img=(u,c)=>u?`<img class="${c||""}" src="${esc(u)}" alt="" loading="lazy" style="width:100%;object-fit:cover;aspect-ratio:${c=="g"?"3/4":"4/3"};display:block">`:`<div class="ph"></div>`;
 function site(){
 const cats=["All",...new Set(D.gallery.map(g=>g.c).filter(Boolean))];
-$("#nav").innerHTML=`<a class="logo" href="#top">${esc(D.brand)}<small>${esc(D.by)}</small></a><button id="bg" aria-label="Menu">☰</button><div id="mn">${["About","Showreel","Services","Gallery","Reviews","Contact"].map(x=>`<a href="#${x.toLowerCase()}">${x}</a>`).join("")}</div>`;
+$("#nav").innerHTML=`<a class="logo" href="#top">${esc(D.brand)}<small>${esc(D.by)}</small></a><div style="display:flex;align-items:center;gap:12px"><a href="${esc(D.insta)}" target="_blank" rel="noopener" style="text-decoration:none;font-size:.75rem;color:var(--gold);display:flex;align-items:center;gap:5px;letter-spacing:.05em">📸 @av_photography_jhansi</a><button id="bg" aria-label="Menu">☰</button></div><div id="mn">${["About","Showreel","Services","Gallery","Reviews","Contact"].map(x=>`<a href="#${x.toLowerCase()}">${x}</a>`).join("")}</div>`;
 $("#wa").href=wa("Hi! I came across your portfolio and would love to enquire about my upcoming shoot.");
-$("#app").innerHTML=`<div class="hero" id="top"><div class="bgi" style="${D.hero?`background-image:url('${esc(D.hero)}')`:""}"></div><div class="ov"></div><div class="hc"><p>${esc(D.sub)}</p><h1>${esc(D.brand)}<i>${esc(D.by)}</i></h1><p>${esc(D.tag)}</p><a class="btn" href="#contact">Book Your Date</a></div></div>
-<section id="about" class="c rv"><div class="eyebrow">The Storyteller</div><h2>About Us</h2><div class="rule"></div><p class="mut" style="white-space:pre-line;max-width:640px;margin:auto">${esc(D.about)}</p><div class="stats">${D.stats.map(x=>`<div><b>${esc(x.n)}</b><span>${esc(x.l)}</span></div>`).join("")}</div></section>
-<section id="showreel" class="dark"><div class="c rv"><div class="eyebrow">Cinematic Highlights</div><h2>Watch Our Latest Cinematic Magic</h2><div class="rule"></div><div class="phone">${D.video?`<video src="${esc(D.video)}" autoplay muted loop playsinline controls></video>`:""}</div><h3 style="text-align:left">More Reels</h3><div class="reels">${D.reels.map(r=>`<a href="${esc(r.u||"#")}" target="_blank" rel="noopener">${r.img?`<img src="${esc(r.img)}" alt="" loading="lazy">`:""}<span>▶ ${esc(r.t)}</span></a>`).join("")}</div></div></section>
-<section id="services"><div class="c rv"><div class="eyebrow">What We Offer</div><h2>Services &amp; Packages</h2><div class="rule"></div></div><div class="grid">${D.services.map(x=>`<div class="card rv">${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block">`:'<div class="ph"></div>'}<div class="b"><h3>${esc(x.t)}</h3><p class="mut">${esc(x.d)}</p><p><i>${x.p?"from ":""}${esc(x.p)}</i></p><a class="btn o" target="_blank" rel="noopener" href="${wa("Hi! I'd like to enquire about "+x.t+".")}">Enquire on WhatsApp</a></div></div>`).join("")}</div></section>
-<section id="gallery"><div class="c rv"><div class="eyebrow">Selected Work</div><h2>The Gallery</h2><div class="rule"></div><div class="tabs">${cats.map(c=>`<button class="${c==cat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}</div></div><div class="mas">${D.gallery.filter(g=>cat=="All"||g.c==cat).map((g,i)=>g.u?`<img class="rv" src="${esc(g.u)}" alt="" loading="lazy">`:`<div class="ph rv" style="aspect-ratio:${i%2?"3/4":"1/1"}"></div>`).join("")}</div></section>
-<section id="reviews" class="c"><div class="rv"><div class="eyebrow">Loved by Clients</div><h2>Kind Words, Real Stories</h2><div class="rule"></div></div><div class="grid">${D.reviews.map(r=>`<div class="card rv"><div class="b"><p style="font-family:var(--serif);font-style:italic">“${esc(r.t)}”</p><b class="mut">${esc(r.n)}</b></div></div>`).join("")}</div></section>
-<section id="contact"><div class="c rv"><div class="eyebrow">Let's Create Magic</div><h2>Book Your Date</h2><div class="rule"></div><p class="mut">Dates fill up fast, especially in wedding season. Send a quick enquiry and we'll reply personally within 24 hours.</p></div>
+$("#app").innerHTML=`<div class="hero" id="top"><div class="bgi" style="${D.hero?`background-image:url('${esc(D.hero)}')`:""}"></div><div class="ov"></div><div class="hc"><p>${esc(D.sub)}</p><h1>${esc(D.brand)}<i>${esc(D.by)}</i></h1><p>${esc(D.tag)}</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px"><a class="btn" href="#contact">Book Your Date</a><a class="btn o" href="${esc(D.insta)}" target="_blank" rel="noopener">Instagram (30K+)</a></div></div></div>
+<section id="about" class="c"><div class="sec-header c"><div class="eyebrow">The Storyteller</div><h2>About Us</h2><div class="rule"></div><p class="mut sec-desc" style="white-space:pre-line;max-width:640px;margin:auto">${esc(D.about)}</p></div><div class="stats rv">${D.stats.map(x=>`<div><b>${esc(x.n)}</b><span>${esc(x.l)}</span></div>`).join("")}</div></section>
+<section id="showreel" class="dark"><div class="c"><div class="sec-header c"><div class="eyebrow">Cinematic Highlights</div><h2>Watch Our Latest Cinematic Magic</h2><div class="rule"></div></div><div class="phone rv">${D.video?`<video src="${esc(D.video)}" autoplay muted loop playsinline controls></video>`:`<div style="height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#181615;color:#f3ece2"><p style="font-size:.85rem;line-height:1.5"><span style="font-size:1.6rem;display:block;margin-bottom:8px">🎬</span><b>Cinematic Wedding Reels</b><br><span class="mut" style="font-size:.75rem">Over 30K followers tune into our latest bridal entries &amp; pre-wedding films.</span><br><br><a href="${esc(D.insta)}" target="_blank" rel="noopener" class="btn" style="font-size:.7rem;padding:8px 14px">Watch on Instagram</a></p></div>`}</div><h3 style="text-align:left">More Reels</h3><div class="reels">${D.reels.map(r=>`<a href="${esc(r.u||D.insta)}" target="_blank" rel="noopener">${r.img?`<img src="${esc(r.img)}" alt="" loading="lazy">`:""}<span>▶ ${esc(r.t)}</span></a>`).join("")}</div>
+
+<div class="ig-section" id="ig-feed-section">
+<div class="ig-header sec-header l">
+<div style="text-align:left">
+<div class="eyebrow" style="display:flex;align-items:center;gap:6px"><span class="live-dot"></span> Fresh From Instagram · @av_photography_jhansi</div>
+<h2 style="margin:4px 0 0;font-size:clamp(1.3rem,4vw,1.8rem);color:#fff">Latest Post Captions &amp; Wedding Hashtags</h2>
+<div class="rule" style="margin:10px 0 12px 0"></div>
+<p class="mut sec-desc" style="font-size:.78rem;margin:3px 0 0">Real client stories, unscripted emotions, and trending hashtags updated directly from our official Instagram feed.</p>
+</div>
+<div style="display:flex;align-items:center;gap:10px">
+<button id="ig-refresh-btn" class="btn o" style="font-size:.7rem;padding:6px 14px;border-color:var(--gold);color:var(--gold);display:flex;align-items:center;gap:6px"><span id="ig-spin">⟳</span> Refresh Feed</button>
+<a href="${esc(D.insta)}" target="_blank" rel="noopener" class="btn" style="font-size:.7rem;padding:6px 14px">Follow 30K+</a>
+</div>
+</div>
+<div class="ig-grid" id="ig-cards-grid">
+${renderIgCards(D.igPosts||[])}
+</div>
+<div class="ig-trending-bar">
+<div style="display:flex;align-items:center;gap:8px;font-size:.75rem">
+<b style="color:var(--gold);letter-spacing:.08em;text-transform:uppercase">🔥 Trending in Jhansi:</b>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+${(D.trendingHashtags||[]).map(t=>`<a class="ig-tag" href="https://www.instagram.com/explore/tags/${esc(t.replace('#',''))}/" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}
+</div>
+</div>
+</div>
+
+</div></section>
+<section id="services"><div class="sec-header c"><div class="eyebrow">What We Offer</div><h2>Services &amp; Packages</h2><div class="rule"></div></div><div class="grid">${D.services.map(x=>`<div class="card rv">${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block">`:'<div class="ph"></div>'}<div class="b"><h3>${esc(x.t)}</h3><p class="mut">${esc(x.d)}</p><p><i>${x.p?"from ":""}${esc(x.p)}</i></p><a class="btn o" target="_blank" rel="noopener" href="${wa("Hi! I'd like to enquire about "+x.t+".")}">Enquire on WhatsApp</a></div></div>`).join("")}</div></section>
+<section id="gallery"><div class="sec-header c"><div class="eyebrow">Selected Work</div><h2>The Gallery</h2><div class="rule"></div><div class="tabs">${cats.map(c=>`<button class="${c==cat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}</div></div><div class="mas">${D.gallery.filter(g=>cat=="All"||g.c==cat).map((g,i)=>g.u?`<img class="rv" src="${esc(g.u)}" alt="" loading="lazy">`:`<div class="ph rv" style="aspect-ratio:${i%2?"3/4":"1/1"}"></div>`).join("")}</div></section>
+<section id="reviews" class="c"><div class="sec-header c"><div class="eyebrow">Loved by Clients</div><h2>Kind Words, Real Stories</h2><div class="rule"></div></div><div class="grid">${D.reviews.map(r=>`<div class="card rv"><div class="b"><p style="font-family:var(--serif);font-style:italic">“${esc(r.t)}”</p><b class="mut">${esc(r.n)}</b></div></div>`).join("")}</div></section>
+<section id="contact"><div class="sec-header c"><div class="eyebrow">Let's Create Magic</div><h2>Book Your Date</h2><div class="rule"></div><p class="mut sec-desc">Dates fill up fast, especially in wedding season. Send a quick enquiry and we'll reply personally within 24 hours.</p></div>
 <div class="fc rv"><form id="enq"><label>Your Name *</label><input name="n" required><label>Phone Number *</label><input name="p" required><label>Event Type</label><select name="t"><option>Wedding</option><option>Pre-Wedding</option><option>Engagement</option><option>Candid / Reception</option><option>Newborn / Maternity</option><option>Product / Commercial</option><option>Other</option></select><label>Preferred Date</label><input name="d" type="date"><label>Tell us about your day</label><textarea name="m" rows="3"></textarea><button class="btn">Send Enquiry</button><a class="btn o" style="text-align:center" target="_blank" rel="noopener" href="${wa("Hi! I'd like to enquire about my upcoming shoot.")}">WhatsApp</a></form></div></section>
-<footer><b style="font-family:var(--serif);font-size:1.2rem;color:#fff">${esc(D.brand)}</b> <span style="color:var(--gold)">${esc(D.by)}</span><p>A boutique studio crafting timeless photographs and films.</p><p>${D.phone?`📞 <a href="tel:${esc(D.phone)}">${esc(D.phone)}</a><br>`:""}${D.email?`✉️ ${esc(D.email)}<br>`:""}📍 ${esc(D.address)} · <a target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(D.address)}">Map</a></p><p>${[["Instagram",D.insta],["YouTube",D.yt],["Facebook",D.fb]].filter(x=>x[1]).map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener">${x[0]}</a>`).join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(D.brand)}. All rights reserved. · <a href="#admin" id="alink">Admin</a></p></footer>`;
+<footer><b style="font-family:var(--serif);font-size:1.2rem;color:#fff">${esc(D.brand)}</b> <span style="color:var(--gold)">${esc(D.by)}</span><p>A boutique studio crafting timeless photographs and films in Jhansi.</p><p>${D.phone?`📞 <a href="tel:${esc(D.phone)}">${esc(D.phone)}</a><br>`:""}${D.email?`✉️ ${esc(D.email)}<br>`:""}📍 ${esc(D.address)} · <a target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(D.address)}">Map</a></p><p>${[["Instagram",D.insta],["YouTube",D.yt],["Facebook",D.fb]].filter(x=>x[1]).map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener">${x[0]}</a>`).join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(D.brand)}. All rights reserved. · <a href="#admin" id="alink">Admin</a></p></footer>`;
 $("#bg").onclick=()=>$("#mn").classList.toggle("open");document.querySelectorAll("#mn a").forEach(a=>a.onclick=()=>$("#mn").classList.remove("open"));
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{cat=b.dataset.c;site()});
 $("#alink").onclick=e=>{e.preventDefault();openAdmin()};
+const igRefBtn=$("#ig-refresh-btn");
+if(igRefBtn){
+igRefBtn.onclick=async()=>{
+const sp=$("#ig-spin");
+if(sp)sp.style.animation="spin 0.8s linear infinite";
+await fetchInstagramFeed(true);
+if(sp)sp.style.animation="";
+};
+}
 $("#enq").onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
 if(SB)SB.from("leads").insert({name:f.n,phone:f.p,type:f.t,date:f.d||"",message:f.m||"",status:"New"}).then(()=>{},()=>{});
 const u=wa(`Hi! I'm ${f.n} (${f.p}). Enquiry for ${f.t}${f.d?" on "+f.d:""}. ${f.m}`);
 if(u.startsWith("http"))window.open(u,"_blank");else alert("Thank you! We have received your enquiry and will contact you soon.");
 e.target.reset()};
-const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12,rootMargin:"0px 0px -30px 0px"});document.querySelectorAll(".sec-header, .rv").forEach(el=>io.observe(el));
+}
+
+function renderIgCards(posts){
+if(!posts||!posts.length)return `<p class="mut" style="grid-column:1/-1;text-align:center;padding:24px">No Instagram posts found. Click 'Refresh Feed' to fetch latest updates.</p>`;
+return posts.slice(0,3).map(p=>`
+<div class="ig-card rv">
+  <div class="ig-card-top">
+    <a class="ig-card-user" href="${esc(p.url||D.insta)}" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span>@av_photography_jhansi</span>
+    </a>
+    <span class="ig-card-badge">${esc(p.date||"Recent")}</span>
+  </div>
+  <div class="ig-img-wrap">
+    ${p.img?`<img src="${esc(p.img)}" alt="AV Photography Jhansi Instagram post" loading="lazy">`:`<div class="ph" style="height:100%"></div>`}
+    ${p.likes?`<div class="ig-likes-overlay"><span>❤️</span> <b>${esc(p.likes)}</b></div>`:""}
+  </div>
+  <div class="ig-card-body">
+    <p class="ig-caption">“${esc(p.caption)}”</p>
+    <div class="ig-tags">
+      ${(p.hashtags||[]).map(h=>`<a class="ig-tag" href="https://www.instagram.com/explore/tags/${esc(h.replace('#',''))}/" target="_blank" rel="noopener">${esc(h)}</a>`).join("")}
+    </div>
+    <a class="ig-btn-link" href="${esc(p.url||D.insta)}" target="_blank" rel="noopener">View Post on Instagram ↗</a>
+  </div>
+</div>`).join("");
+}
+
+async function fetchInstagramFeed(force=false){
+try{
+const res=await fetch("/api/instagram/recent");
+if(res.ok){
+const data=await res.json();
+if(data&&data.posts&&data.posts.length){
+D.igPosts=data.posts;
+if(data.trendingHashtags)D.trendingHashtags=data.trendingHashtags;
+const g=$("#ig-cards-grid");
+if(g)g.innerHTML=renderIgCards(D.igPosts);
+if(force)showToast("Instagram feed updated from @av_photography_jhansi ✓");
+}
+}
+}catch(err){
+console.warn("Could not fetch Instagram feed:",err);
+}
 }
 function save(){}
 // ---------- admin ----------
 const F=(path,label,ta)=>{const v=path.split(".").reduce((o,k)=>o[k],D);return `<label>${label}</label>${ta?`<textarea rows="4" data-p="${path}">${esc(v)}</textarea>`:`<input data-p="${path}" value="${esc(v)}">`}`};
 const LIST=(k,title,fs,blank)=>`<h3>${title}</h3>${D[k].map((x,i)=>`<div class="r">${fs.map(([f,l])=>F(k+"."+i+"."+f,l)).join("")}<button class="btn o" data-del="${k}.${i}">Delete</button></div>`).join("")}<button class="btn o" data-add="${k}">+ Add</button>`;
+function showToast(m){
+const t=$("#toast");if(!t)return;
+t.innerHTML=`<span>✦</span> <span>${esc(m)}</span>`;t.classList.add("show");
+clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove("show"),3200);
+}
+function exportBackup(){
+const str="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(D,null,2));
+const a=document.createElement("a");
+a.setAttribute("href",str);
+a.setAttribute("download","av_photography_backup_"+new Date().toISOString().slice(0,10)+".json");
+document.body.appendChild(a);a.click();a.remove();
+showToast("Portfolio backup downloaded successfully ✓");
+}
+function importBackup(file){
+if(!file)return;
+const r=new FileReader();
+r.onload=e=>{
+try{
+const json=JSON.parse(e.target.result);
+if(json&&typeof json=="object"){
+D={...D,...json};
+admin();site();
+showToast("Portfolio data restored! Click 'Save & publish' to make live.");
+}
+}catch(err){showToast("Could not read backup JSON file");}
+};
+r.readAsText(file);
+}
+
+// ---------- Visual Admin Components ----------
+let gCat = "All", lFilter = "All";
+let batchQueue = [];
+
+function formatFileSize(bytes){
+  if(!bytes||isNaN(bytes))return '0 B';
+  if(bytes<1024)return bytes+' B';
+  if(bytes<1024*1024)return (bytes/1024).toFixed(1)+' KB';
+  return (bytes/(1024*1024)).toFixed(1)+' MB';
+}
+
+function getBatchOverallPercent(){
+  if(!batchQueue.length)return 0;
+  const total = batchQueue.reduce((acc,item)=>acc+(item.progress||0),0);
+  return Math.round(total / batchQueue.length);
+}
+
+function renderBatchQueueItems(){
+  if(!batchQueue.length)return `<div class="mut" style="text-align:center;padding:18px;font-size:.8rem">No photos selected in batch queue. Drag or browse photos above.</div>`;
+  return batchQueue.map((item,idx)=>`
+    <div class="batch-item" id="batch-item-${item.id}">
+      <div class="batch-thumb">
+        <img src="${item.preview}" alt="" loading="lazy">
+      </div>
+      <div class="batch-info">
+        <div class="batch-name" title="${esc(item.name)}">${esc(item.name)}</div>
+        <div class="batch-meta">
+          <span>${formatFileSize(item.size)}</span>
+          <span>•</span>
+          <select class="batch-item-cat" data-id="${item.id}" style="width:auto;padding:2px 6px;font-size:.72rem;background:#fff;border:1px solid var(--line);border-radius:3px"${item.status==='uploading'||item.status==='done'?' disabled':''}>
+            ${["Wedding","Pre-Wedding","Candid","Portraits","Commercial","Haldi"].map(c=>`<option value="${c}"${c===item.category?' selected':''}>${c}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+      <div class="batch-progress-wrap">
+        <div class="batch-bar-bg">
+          <div class="batch-bar-fill ${item.status==='done'?'done':item.status==='error'?'err':''}" id="batch-fill-${item.id}" style="width:${item.progress}%"></div>
+        </div>
+        <div class="batch-percent">
+          <span class="batch-status-badge batch-status-${item.status}" id="batch-badge-${item.id}">
+            ${item.status==='pending'?'⏳ Ready':item.status==='uploading'?`⚡ Uploading ${item.progress}%`:item.status==='done'?'✓ Uploaded':'✕ Failed'}
+          </span>
+          <b id="batch-pct-${item.id}">${item.progress}%</b>
+        </div>
+      </div>
+      <div>
+        ${item.status==='uploading'?`<span class="mut" style="font-size:.75rem">...</span>`:
+          `<button type="button" class="btn o" data-remove-batch="${item.id}" style="font-size:.7rem;padding:4px 8px;color:#d9534f;border-color:rgba(217,83,79,.3)" title="Remove photo">✕</button>`}
+      </div>
+    </div>
+  `).join("");
+}
+
+function updateBatchItemUI(item){
+  const fill = document.getElementById("batch-fill-" + item.id);
+  const pct = document.getElementById("batch-pct-" + item.id);
+  const badge = document.getElementById("batch-badge-" + item.id);
+  if (fill) {
+    fill.style.width = item.progress + "%";
+    fill.className = "batch-bar-fill " + (item.status === "done" ? "done" : item.status === "error" ? "err" : "");
+  }
+  if (pct) pct.textContent = item.progress + "%";
+  if (badge) {
+    badge.className = "batch-status-badge batch-status-" + item.status;
+    badge.innerHTML = item.status === "pending" ? "⏳ Ready" : item.status === "uploading" ? `⚡ Uploading ${item.progress}%` : item.status === "done" ? "✓ Uploaded" : "✕ Failed";
+  }
+}
+
+function updateOverallUI(){
+  const overallBar = document.getElementById("batch-overall-bar");
+  if (overallBar) {
+    overallBar.style.width = getBatchOverallPercent() + "%";
+  }
+}
+
+function readFileAsBase64(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function uploadFileWithProgress(item, base64Data){
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/upload", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        const pct = Math.min(95, Math.round(30 + (e.loaded / e.total) * 65));
+        item.progress = pct;
+        updateBatchItemUI(item);
+        updateOverallUI();
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const json = JSON.parse(xhr.responseText);
+          resolve(json);
+        } catch (e) {
+          reject(new Error("Invalid server response format"));
+        }
+      } else {
+        try {
+          const err = JSON.parse(xhr.responseText);
+          reject(new Error(err.error || "Server error"));
+        } catch (_) {
+          reject(new Error("HTTP error " + xhr.status));
+        }
+      }
+    };
+
+    xhr.onerror = () => reject(new Error("Network connection error"));
+
+    xhr.send(JSON.stringify({
+      filename: item.name,
+      data: base64Data,
+      category: item.category
+    }));
+  });
+}
+
+function siteTab(){
+return `<div class="adm-card">
+<div class="adm-card-title"><span>✦ Live Hero Banner Preview</span><small class="mut">Simulates the first impression of your luxury portfolio</small></div>
+<div class="adm-hero-prev" id="adm-hero-prev">
+<div class="bgi" style="${D.hero?`background-image:url('${esc(D.hero)}')`:""}"></div>
+<div class="ov"></div>
+<div class="hc"><p id="prev-sub">${esc(D.sub||"Luxury photography in Jhansi")}</p><h1 id="prev-brand">${esc(D.brand)} <i id="prev-by" style="font-size:.6em;color:var(--gold);display:block;font-style:italic">${esc(D.by)}</i></h1><p id="prev-tag">${esc(D.tag||"")}</p><span class="btn" style="margin-top:10px;pointer-events:none;transform:scale(.85)">Book Your Date</span></div>
+</div>
+</div>
+<div class="adm-grid-2">
+<div class="adm-card">
+<div class="adm-card-title"><span>Studio Branding &amp; Hero</span></div>
+<label>Studio Brand Name</label><input data-p="brand" value="${esc(D.brand)}" placeholder="e.g. AV Photography">
+<label>Byline / City / Line under brand</label><input data-p="by" value="${esc(D.by)}" placeholder="e.g. Jhansi / by Girish">
+<label>Subtitle (Kicker above title)</label><input data-p="sub" value="${esc(D.sub)}" placeholder="e.g. Luxury photography in Jhansi">
+<label>Tagline / Disciplines</label><input data-p="tag" value="${esc(D.tag)}" placeholder="e.g. Wedding · Pre-Wedding · Portraits · Events">
+<label>Hero Background Image URL</label><input data-p="hero" id="inp-hero" value="${esc(D.hero)}" placeholder="https://images.unsplash.com/...">
+<small class="mut" style="display:block;margin-top:2px">High-resolution horizontal photo for cinematic header</small>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Contact &amp; Studio Presence</span></div>
+<label>WhatsApp / Phone (with country code)</label><input data-p="phone" value="${esc(D.phone)}" placeholder="e.g. 919876543210">
+<label>Studio Email</label><input data-p="email" value="${esc(D.email)}" placeholder="contact@avphotography.com">
+<label>Studio Address / City</label><input data-p="address" value="${esc(D.address)}" placeholder="Jhansi, Uttar Pradesh">
+<label>Instagram URL</label><input data-p="insta" value="${esc(D.insta)}" placeholder="https://instagram.com/...">
+<label>YouTube Channel URL</label><input data-p="yt" value="${esc(D.yt)}" placeholder="https://youtube.com/...">
+<label>Facebook Page URL</label><input data-p="fb" value="${esc(D.fb)}" placeholder="https://facebook.com/...">
+</div>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>About The Studio (Editorial Story)</span></div>
+<label>About Us Paragraph</label>
+<textarea data-p="about" rows="4" placeholder="Craft your studio story...">${esc(D.about)}</textarea>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Key Metrics &amp; Experience Counters</span><button class="btn o" data-add="stats" style="font-size:.7rem;padding:5px 12px">+ Add Counter</button></div>
+<p class="mut" style="font-size:.8rem;margin-top:0">Displayed on the homepage to highlight studio legacy.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+${D.stats.map((s,i)=>`<div class="r" style="background:#fffaf2;padding:12px;border:1px solid var(--line);border-radius:4px">
+<label>Number / Stat</label><input data-p="stats.${i}.n" value="${esc(s.n)}" placeholder="e.g. 300+">
+<label>Label</label><input data-p="stats.${i}.l" value="${esc(s.l)}" placeholder="e.g. Shoots">
+<div style="text-align:right;margin-top:8px"><button class="adm-btn-danger" data-del="stats.${i}">Delete</button></div>
+</div>`).join("")}
+</div>
+</div>`;
+}
+
+function galleryTab(){
+const cats=["All",...new Set(D.gallery.map(g=>g.c).filter(Boolean))];
+return `<div class="adm-card">
+<div class="adm-card-title">
+  <span>📸 Batch Upload Portfolio Images</span>
+  <span class="badge" style="background:rgba(196,154,74,.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:.72rem">Multi-File Processing</span>
+</div>
+<p class="mut" style="font-size:.85rem;margin-top:0">
+  Select or drag multiple high-res photos at once. Each image tracks individual upload progress with live progress indicators.
+</p>
+
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+  <div style="flex:1;min-width:200px">
+    <label style="margin:0 0 4px">Default Category for Batch:</label>
+    <select id="batch-cat" style="padding:7px;font-size:.82rem">
+      <option value="Wedding">Wedding</option>
+      <option value="Pre-Wedding">Pre-Wedding</option>
+      <option value="Candid">Candid</option>
+      <option value="Portraits">Portraits</option>
+      <option value="Commercial">Commercial</option>
+      <option value="Haldi">Haldi &amp; Rituals</option>
+    </select>
+  </div>
+</div>
+
+<div class="gal-dropzone" id="gal-dropzone">
+  <span class="gal-dropzone-icon">📷</span>
+  <b style="font-size:1rem;color:var(--fg);display:block;margin-bottom:4px">Drag &amp; drop multiple photos here, or click to browse</b>
+  <span class="mut" style="font-size:.76rem">Supports JPG, PNG, WEBP. Select multiple photos to upload simultaneously.</span>
+  <div style="margin-top:14px">
+    <button type="button" class="btn" id="gal-browse-btn" style="pointer-events:none">📁 Choose Multiple Photos</button>
+  </div>
+  <input type="file" id="gal-batch-input" multiple accept="image/*" style="display:none">
+</div>
+
+<div id="batch-queue-container" style="${batchQueue.length?'':'display:none'}">
+  <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div>
+        <b style="font-family:var(--serif);font-size:1.05rem" id="batch-summary-text">Selected Photos (<span id="batch-count">${batchQueue.length}</span>)</b>
+        <div class="mut" style="font-size:.75rem" id="batch-status-sub">Ready to upload to portfolio</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button type="button" class="btn" id="batch-start-btn" style="font-size:.75rem;padding:7px 16px">⚡ Start Batch Upload</button>
+        <button type="button" class="btn o" id="batch-clear-btn" style="font-size:.75rem;padding:7px 12px">✕ Clear</button>
+      </div>
+    </div>
+    <div class="overall-bar-bg">
+      <div class="overall-bar-fill" id="batch-overall-bar" style="width:${getBatchOverallPercent()}%"></div>
+    </div>
+    <div class="batch-queue" id="batch-queue-list">
+      ${renderBatchQueueItems()}
+    </div>
+  </div>
+</div>
+
+<details style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin-top:16px">
+  <summary style="cursor:pointer;font-weight:500;font-size:.82rem;color:var(--gold);user-select:none">🔗 Or Add Single Photo via Direct Web URL</summary>
+  <form id="gal-add" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start;margin-top:14px">
+    <div>
+      <label>Category *</label>
+      <select id="ga-c" name="c">
+        <option value="Wedding">Wedding</option>
+        <option value="Pre-Wedding">Pre-Wedding</option>
+        <option value="Candid">Candid</option>
+        <option value="Portraits">Portraits</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Haldi">Haldi &amp; Rituals</option>
+      </select>
+      <label>Image Direct URL *</label>
+      <input id="ga-u" name="u" placeholder="https://images.unsplash.com/..." required>
+      <small class="mut" style="display:block;margin-top:4px">Paste direct link to image (.jpg, .png, Unsplash, Google Drive CDN, ImgBB, etc.)</small>
+      <div style="margin-top:14px"><button class="btn" type="submit">+ Add to Portfolio</button></div>
+    </div>
+    <div>
+      <label>Live Thumbnail Preview</label>
+      <div id="ga-prev" class="adm-thumb-preview" style="height:150px"><span class="mut" style="font-size:.8rem">Paste image URL to preview</span></div>
+    </div>
+  </form>
+</details>
+</div>
+<div class="adm-card">
+<div class="adm-card-title">
+<span>Portfolio Photos (${D.gallery.length})</span>
+<div class="tabs" style="margin-bottom:0">
+${cats.map(c=>`<button class="${c==gCat?"on":""}" data-gcat="${esc(c)}">${esc(c)}</button>`).join("")}
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:16px">
+${D.gallery.filter(g=>gCat=="All"||g.c==gCat).map((g,i)=>{
+const realIdx=D.gallery.indexOf(g);
+return `<div class="card" style="background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden">
+<div style="aspect-ratio:3/4;background:#e9dfd0;overflow:hidden;position:relative">
+${g.u?`<img src="${esc(g.u)}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">`:`<div class="ph" style="height:100%"></div>`}
+<span style="position:absolute;top:8px;left:8px;background:rgba(38,37,36,.85);color:var(--gold);padding:2px 8px;font-size:.65rem;border-radius:3px;text-transform:uppercase;letter-spacing:.05em">${esc(g.c||"General")}</span>
+</div>
+<div style="padding:12px;display:grid;gap:6px">
+<label style="margin:0;font-size:.62rem">Category</label>
+<select data-p="gallery.${realIdx}.c" style="padding:4px;font-size:.78rem">
+${["Wedding","Pre-Wedding","Candid","Portraits","Commercial","Haldi"].map(ct=>`<option value="${ct}" ${ct==g.c?"selected":""}>${ct}</option>`).join("")}
+</select>
+<label style="margin:4px 0 0;font-size:.62rem">Image URL</label>
+<input data-p="gallery.${realIdx}.u" value="${esc(g.u)}" style="padding:4px;font-size:.75rem">
+<div style="text-align:right;margin-top:6px">
+<button class="adm-btn-danger" data-del="gallery.${realIdx}">Delete Photo</button>
+</div>
+</div>
+</div>`;}).join("")||`<p class="mut">No photos in this category.</p>`}
+</div>
+</div>`;
+}
+
+function servicesTab(){
+return `<div class="adm-card">
+<div class="adm-card-title"><span>+ Add New Photography Package</span></div>
+<form id="srv-add" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start">
+<div>
+<label>Package Title *</label><input id="sa-t" name="t" placeholder="e.g. Royal Wedding Collection" required>
+<label>Starting Price *</label><input id="sa-p" name="p" placeholder="e.g. ₹75,000 / Custom" required>
+<label>Package Description *</label><textarea id="sa-d" name="d" rows="3" placeholder="Full day coverage, 2 photographers, cinematic teaser..." required></textarea>
+<label>Cover Image URL (optional)</label><input id="sa-img" name="img" placeholder="https://images.unsplash.com/...">
+<div style="margin-top:12px"><button class="btn" type="submit">+ Add Package</button></div>
+</div>
+<div>
+<label>Package Card Live Preview</label>
+<div class="card" style="max-width:320px;background:#fffaf2">
+<div id="sa-prev-img" style="aspect-ratio:4/3;background:#e9dfd0;overflow:hidden;position:relative"><div class="ph"></div></div>
+<div style="padding:14px">
+<h3 id="sa-prev-t" style="margin:0 0 4px;font-size:1.15rem">◆ Package Title</h3>
+<p id="sa-prev-d" class="mut" style="font-size:.8rem;margin:0 0 6px">Package description will render here.</p>
+<p style="margin:0 0 10px"><i id="sa-prev-p">from ₹...</i></p>
+<span class="btn o" style="font-size:.7rem;padding:6px 12px;pointer-events:none">Enquire on WhatsApp</span>
+</div>
+</div>
+</div>
+</form>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Current Services &amp; Packages (${D.services.length})</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px">
+${D.services.map((s,i)=>`<div class="card" style="background:#fffaf2;border:1px solid var(--line);border-radius:6px">
+<div style="aspect-ratio:4/3;background:#e9dfd0;overflow:hidden;position:relative">
+${s.img?`<img src="${esc(s.img)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`:`<div class="ph" style="height:100%"></div>`}
+</div>
+<div style="padding:16px;display:grid;gap:6px">
+<label style="margin:0">Title</label><input data-p="services.${i}.t" value="${esc(s.t)}">
+<label style="margin:0">Price</label><input data-p="services.${i}.p" value="${esc(s.p)}">
+<label style="margin:0">Description</label><textarea data-p="services.${i}.d" rows="2">${esc(s.d)}</textarea>
+<label style="margin:0">Image URL</label><input data-p="services.${i}.img" value="${esc(s.img)}">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+<a class="btn o" href="${wa("Hi! I'd like to enquire about "+s.t)}" target="_blank" rel="noopener" style="font-size:.7rem;padding:6px 10px">Test WhatsApp</a>
+<button class="adm-btn-danger" data-del="services.${i}">Delete</button>
+</div>
+</div>
+</div>`).join("")}
+</div>
+</div>`;
+}
+
+function reelsTab(){
+return `<div class="adm-grid-2">
+<div class="adm-card">
+<div class="adm-card-title"><span>Cinematic Showreel Video</span></div>
+<p class="mut" style="font-size:.8rem;margin-top:0">Main centerpiece video displayed inside the smartphone frame on the website.</p>
+<label>Video URL (.mp4 direct link)</label>
+<input data-p="video" id="inp-reel-vid" value="${esc(D.video)}" placeholder="https://example.com/showreel.mp4">
+<small class="mut" style="display:block;margin-top:4px">Tip: host your video on Google Drive (direct link), Supabase Storage, or Cloudinary.</small>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Showreel Preview Mockup</span></div>
+<div class="phone" style="width:min(180px,50vw);margin:10px auto">
+${D.video?`<video src="${esc(D.video)}" autoplay muted loop playsinline controls style="width:100%;height:100%;object-fit:cover;display:block"></video>`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#888;font-size:.75rem;text-align:center;padding:12px">No video URL set</div>`}
+</div>
+</div>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>+ Add Short Reel Highlight</span></div>
+<form id="reel-add" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+<div><label>Reel Title *</label><input id="ra-t" name="t" placeholder="e.g. Bridal Entry / Haldi Vows" required></div>
+<div><label>Video Link (YouTube / Instagram)</label><input id="ra-u" name="u" placeholder="https://instagram.com/reel/..." required></div>
+<div><label>Cover Thumbnail Image URL</label><input id="ra-img" name="img" placeholder="https://images.unsplash.com/..."></div>
+<div style="grid-column:1/-1"><button class="btn" type="submit">+ Add Reel</button></div>
+</form>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Reels Carousel (${D.reels.length})</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
+${D.reels.map((r,i)=>`<div class="card" style="background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden">
+<div style="aspect-ratio:9/16;background:#3a3633;position:relative;overflow:hidden">
+${r.img?`<img src="${esc(r.img)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`:`<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem">▶</div>`}
+<span style="position:absolute;left:8px;bottom:8px;color:#fff;font-size:.7rem;text-shadow:0 1px 4px #000;font-weight:500">▶ ${esc(r.t)}</span>
+</div>
+<div style="padding:10px;display:grid;gap:6px">
+<label style="margin:0;font-size:.65rem">Title</label><input data-p="reels.${i}.t" value="${esc(r.t)}" style="font-size:.78rem;padding:4px">
+<label style="margin:0;font-size:.65rem">Link</label><input data-p="reels.${i}.u" value="${esc(r.u)}" style="font-size:.78rem;padding:4px">
+<label style="margin:0;font-size:.65rem">Thumb</label><input data-p="reels.${i}.img" value="${esc(r.img)}" style="font-size:.78rem;padding:4px">
+<div style="text-align:right;margin-top:4px"><button class="adm-btn-danger" data-del="reels.${i}">Delete</button></div>
+</div>
+</div>`).join("")}
+</div>
+</div>`;
+}
+
+function instagramTab(){
+const posts=D.igPosts||[];
+return `<div class="adm-card">
+<div class="adm-card-title">
+  <span>📸 Live Instagram Feed &amp; Captions Sync (@av_photography_jhansi)</span>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <button type="button" class="btn o" id="adm-ig-sync" style="font-size:.72rem;padding:6px 14px">⟳ Sync from Instagram API</button>
+    <button type="button" class="btn" id="adm-ig-save" style="font-size:.72rem;padding:6px 14px;border-color:var(--gold)">💾 Save Posts to API &amp; Site</button>
+  </div>
+</div>
+<p class="mut" style="font-size:.85rem;margin-top:0">
+  This section feeds the 3 latest post captions, images, and wedding hashtags directly below the Reels section on your homepage. Keep it updated with fresh shoots, client stories, and trending hashtags.
+</p>
+<div style="display:flex;align-items:center;gap:8px;font-size:.78rem;background:#fffaf2;padding:8px 12px;border:1px solid var(--line);border-radius:4px;margin-bottom:16px">
+  <span class="live-dot"></span>
+  <span id="adm-ig-status">Synced with handle: <b>@av_photography_jhansi</b> (30K+ community in Jhansi)</span>
+</div>
+</div>
+
+<div class="adm-card">
+<div class="adm-card-title"><span>Trending Wedding Hashtags in Jhansi</span></div>
+<p class="mut" style="font-size:.8rem;margin-top:0">Comma-separated hashtags displayed in the active trending banner below the Reels on your live site.</p>
+<label>Trending Hashtags</label>
+<input id="adm-trending-ht" value="${esc((D.trendingHashtags||[]).join(', '))}" placeholder="#AVPhotography, #JhansiWedding, #OrchhaPreWedding...">
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px" id="adm-ht-chips">
+  ${(D.trendingHashtags||[]).map(t=>`<span class="ig-tag">${esc(t)}</span>`).join("")}
+</div>
+</div>
+
+<div class="adm-card">
+<div class="adm-card-title"><span>Latest 3 Instagram Posts (${posts.length})</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px">
+${posts.slice(0,3).map((p,i)=>`
+<div class="card" style="background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden">
+  <div style="aspect-ratio:1/1;background:#262524;overflow:hidden;position:relative" id="adm-ig-prev-${i}">
+    ${p.img?`<img src="${esc(p.img)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`:`<div class="ph" style="height:100%"></div>`}
+    <span style="position:absolute;top:8px;left:8px;background:rgba(38,37,36,.85);color:var(--gold);padding:3px 8px;font-size:.65rem;border-radius:3px">Post #${i+1}</span>
+    <span style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.75);color:#fff;padding:2px 8px;font-size:.68rem;border-radius:10px">❤️ ${esc(p.likes||"1K")}</span>
+  </div>
+  <div style="padding:14px;display:grid;gap:8px">
+    <label style="margin:0">Post Image URL</label>
+    <input data-ig="img" data-idx="${i}" value="${esc(p.img)}" placeholder="https://images.unsplash.com/...">
+    
+    <label style="margin:0">Post Caption (Client Story &amp; Details)</label>
+    <textarea data-ig="caption" data-idx="${i}" rows="3" placeholder="Write the story, congratulations, or shoot description...">${esc(p.caption)}</textarea>
+    
+    <label style="margin:0">Hashtags (comma separated)</label>
+    <input data-ig="hashtags" data-idx="${i}" value="${esc((p.hashtags||[]).join(', '))}" placeholder="#BridalEntry, #JhansiWedding...">
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div>
+        <label style="margin:0">Relative Date</label>
+        <input data-ig="date" data-idx="${i}" value="${esc(p.date)}" placeholder="e.g. 2 days ago">
+      </div>
+      <div>
+        <label style="margin:0">Likes Display</label>
+        <input data-ig="likes" data-idx="${i}" value="${esc(p.likes)}" placeholder="e.g. 1.8K">
+      </div>
+    </div>
+    
+    <label style="margin:0">Direct Instagram Post Link</label>
+    <input data-ig="url" data-idx="${i}" value="${esc(p.url)}" placeholder="https://www.instagram.com/p/...">
+    
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+      <a class="btn o" href="${esc(p.url||D.insta)}" target="_blank" rel="noopener" style="font-size:.68rem;padding:5px 10px">View Link</a>
+      <span class="mut" style="font-size:.7rem">Updates live</span>
+    </div>
+  </div>
+</div>
+`).join("")}
+</div>
+</div>`;
+}
+
 function reviewsTab(){
-return `<h3>Customer Reviews &amp; Testimonials</h3><p class="mut">Manage existing client testimonials or use the dedicated form below to manually add new ones.</p>${D.reviews&&D.reviews.length?D.reviews.map((r,i)=>`<div class="r"><label>Client Name</label><input data-p="reviews.${i}.n" value="${esc(r.n)}" placeholder="Client Name"><label>Review Text</label><textarea rows="3" data-p="reviews.${i}.t" placeholder="Review text">${esc(r.t)}</textarea><div style="text-align:right;margin-top:6px"><button class="btn o" data-del="reviews.${i}">Delete</button></div></div>`).join(""):`<p class="mut">No reviews yet.</p>`}
-<div class="fc" style="margin:24px 0 16px;max-width:100%">
-<h3 style="margin-top:0">Add New Testimonial</h3>
-<p class="mut" style="font-size:.8rem;margin-top:-6px;margin-bottom:12px">Manually add a review from a client (e.g. from WhatsApp, Google, or direct message).</p>
+return `<div class="adm-grid-2">
+<div class="adm-card">
+<div class="adm-card-title"><span>+ Add Client Testimonial</span></div>
 <form id="rf">
 <label for="rf-n">Client's Name *</label>
-<input id="rf-n" name="name" placeholder="e.g. Priya &amp; Aman" required>
-<label for="rf-t">Review Text *</label>
-<textarea id="rf-t" name="text" rows="4" placeholder="e.g. AV Photography captured every moment so beautifully! Highly recommended..." required></textarea>
-<div style="margin-top:10px"><button class="btn" type="submit">+ Add Testimonial</button></div>
-</form></div>`}
-function admin(){
-const body=tab=="Site"?[["brand","Brand name"],["by","Name line under brand (e.g. by Girish / city)"],["tag","Tagline"],["sub","Small text above title"],["hero","Hero background image URL"],["video","Showreel video URL (.mp4 link)"],["phone","WhatsApp / phone (with country code)"],["email","Email"],["address","Address"],["insta","Instagram URL"],["yt","YouTube URL"],["fb","Facebook URL"]].map(a=>F(...a)).join("")+F("about","About text",1)+LIST("stats","Stats",[["n","Number"],["l","Label"]])+LIST("reels","Reels",[["t","Title"],["u","Link (YouTube etc.)"],["img","Thumbnail URL"]])
-:tab=="Services"?LIST("services","Services",[["t","Title"],["d","Description"],["p","Price"],["img","Image URL"]])
-:tab=="Gallery"?LIST("gallery","Photos",[["u","Image URL"],["c","Category"]])
-:tab=="Reviews"?reviewsTab()
-:leads();
-$("#adm").innerHTML=`<div class="top"><button class="btn" id="pub">Save &amp; publish</button><button class="btn o" id="cl">Close</button><button class="btn o" id="lo">Log out</button><button class="btn o" id="pw">Password</button>${["Site","Services","Gallery","Reviews","Leads"].map(t=>`<button class="btn ${t==tab?"":"o"}" data-t="${t}">${t}</button>`).join("")}</div><p class="mut" id="msg">Changes go live only after Save &amp; publish. Paste image links (e.g. from Google Drive/Instagram CDN/ImgBB).</p>${body}`;
-const q=s=>document.querySelectorAll("#adm "+s);
-q("[data-p]").forEach(el=>el.oninput=()=>{const ks=el.dataset.p.split(".");let o=D;ks.slice(0,-1).forEach(k=>o=o[k]);o[ks.at(-1)]=el.value});
-q("[data-t]").forEach(b=>b.onclick=async()=>{tab=b.dataset.t;if(tab=="Leads")await loadLeads();admin()});
-q("[data-add]").forEach(b=>b.onclick=()=>{const k=b.dataset.add;D[k].push(k=="services"?{t:"New service",d:"",p:"",img:""}:k=="gallery"?{u:"",c:""}:k=="stats"?{n:"",l:""}:k=="reels"?{t:"",u:"",img:""}:{n:"",t:""});admin()});
-q("[data-del]").forEach(b=>b.onclick=()=>{const[k,i]=b.dataset.del.split(".");D[k].splice(+i,1);admin()});
-$("#cl").onclick=closeAdmin;
-$("#lo").onclick=async()=>{await SB.auth.signOut();closeAdmin()};
-$("#pw").onclick=async()=>{const p=prompt("New password (minimum 8 characters):");if(!p)return;if(p.length<8){alert("Too short.");return}const{error}=await SB.auth.updateUser({password:p});$("#msg").textContent=error?"Could not change password: "+error.message:"Password changed ✓"};
-$("#pub").onclick=async()=>{$("#msg").textContent="Publishing…";const{error}=await SB.from("site_content").upsert({id:1,data:D,updated_at:new Date().toISOString()});$("#msg").textContent=error?"Could not publish: "+error.message:"Published ✓ Your website is updated."};
-q("[data-st]").forEach(el=>el.onchange=async()=>{const{error}=await SB.from("leads").update({status:el.value}).eq("id",el.dataset.st);if(error)alert(error.message)});
-q("[data-ld]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete this lead?"))return;await SB.from("leads").delete().eq("id",b.dataset.ld);await loadLeads();admin()});
-const lr=$("#lr");if(lr)lr.onclick=async()=>{await loadLeads();admin()};
-const nf=$("#lf");if(nf)nf.onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const{error}=await SB.from("leads").insert({...f,status:"New"});if(error){alert(error.message);return}await loadLeads();admin()};
-const rf=$("#rf");if(rf)rf.onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const n=(f.name||"").trim(),t=(f.text||"").trim();if(!n||!t)return;if(!Array.isArray(D.reviews))D.reviews=[];D.reviews.push({n,t});$("#msg").textContent="Testimonial added! Click 'Save & publish' to make changes live.";admin()};
+<input id="rf-n" name="name" placeholder="e.g. Priya &amp; Aman Sharma" required>
+<label for="rf-t">Review / Testimonial Text *</label>
+<textarea id="rf-t" name="text" rows="4" placeholder="e.g. AV Photography captured every magical nuance of our wedding day so effortlessly..." required></textarea>
+<div style="margin-top:12px"><button class="btn" type="submit">+ Add Testimonial</button></div>
+</form>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Live Testimonial Preview</span></div>
+<div class="card" style="background:#fffaf2;padding:20px;border:1px solid var(--gold)">
+<div style="color:var(--gold);font-size:1.1rem;margin-bottom:6px">★★★★★</div>
+<p id="rf-prev-t" style="font-family:var(--serif);font-style:italic;font-size:1.05rem;line-height:1.6;margin:0 0 10px;color:var(--fg)">“AV Photography captured every magical nuance of our wedding day so effortlessly...”</p>
+<b id="rf-prev-n" class="mut" style="font-size:.85rem;display:block">Priya &amp; Aman Sharma</b>
+</div>
+</div>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Client Reviews (${D.reviews.length})</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+${D.reviews.map((r,i)=>`<div class="card" style="background:#fffaf2;border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:8px">
+<div style="color:var(--gold);font-size:.9rem">★★★★★</div>
+<p style="font-family:var(--serif);font-style:italic;margin:0;font-size:1rem;color:var(--fg)">“${esc(r.t)}”</p>
+<b class="mut" style="font-size:.85rem">— ${esc(r.n)}</b>
+<div style="border-top:1px solid var(--line);padding-top:8px;margin-top:4px">
+<label style="margin:0">Edit Name</label><input data-p="reviews.${i}.n" value="${esc(r.n)}" style="font-size:.8rem;padding:5px">
+<label style="margin:4px 0 0">Edit Quote</label><textarea data-p="reviews.${i}.t" rows="3" style="font-size:.8rem;padding:5px">${esc(r.t)}</textarea>
+<div style="text-align:right;margin-top:6px"><button class="adm-btn-danger" data-del="reviews.${i}">Delete Review</button></div>
+</div>
+</div>`).join("")||`<p class="mut">No reviews yet.</p>`}
+</div>
+</div>`;
 }
-const ST=["New","Contacted","Quoted","Booked","Delivered"];
-async function loadLeads(){const{data}=await SB.from("leads").select("*").order("created_at",{ascending:false});items=data||[]}
-function leads(){
-return `<h3>Leads &amp; Clients</h3><button class="btn o" id="lr">Refresh</button>${items.map(x=>{const d=String(x.phone||"").replace(/\D/g,""),n=d.length==10?"91"+d:d,m=encodeURIComponent("Hi "+x.name+", this is "+D.brand+" regarding your "+x.type+" shoot.");return `<div class="r"><b>${esc(x.name)} <span class="mut">${esc(x.type)} ${esc(x.date||"")}</span></b><span class="mut">${esc(x.phone)}</span>${x.message?`<span class="mut">${esc(x.message)}</span>`:""}<select data-st="${x.id}">${ST.map(s=>`<option ${s==x.status?"selected":""}>${s}</option>`).join("")}</select>${n?`<span><a href="https://wa.me/${n}?text=${m}" target="_blank" rel="noopener">WhatsApp</a> · <a href="sms:+${n}?body=${m}">SMS</a> · <a href="tel:+${n}">Call</a></span>`:""}<button class="btn o" data-ld="${x.id}">Delete</button></div>`}).join("")||'<p class="mut">No leads yet.</p>'}
-<form id="lf"><input name="name" placeholder="Name" required><input name="phone" placeholder="Phone"><select name="type"><option>Wedding</option><option>Pre-Wedding</option><option>Event</option><option>Portrait / Baby</option><option>Product</option></select><input name="date" type="date"><button class="btn">Add lead</button></form>`}
-function closeAdmin(){$("#adm").classList.add("hide");if(location.hash=="#admin")history.replaceState(null,"",location.pathname+location.search);site()}
-function login(msg){$("#adm").innerHTML=`<div class="fc" style="margin-top:10vh"><h3 style="margin-top:0">Admin login</h3><form id="lg"><label>Email</label><input name="e" type="email" required autocomplete="username"><label>Password</label><input name="p" type="password" required autocomplete="current-password"><button class="btn">Sign in</button><button type="button" class="btn o" id="lc">Close</button><p class="mut" id="lm">${esc(msg||"")}</p></form></div>`;
+
+function leadsTab(){
+const tot=items.length,nw=items.filter(x=>x.status=="New").length,bk=items.filter(x=>x.status=="Booked").length,ct=items.filter(x=>["Contacted","Quoted"].includes(x.status)).length;
+return `<div class="adm-kpi-grid">
+<div class="adm-kpi"><b>${tot}</b><span>Total Inquiries</span></div>
+<div class="adm-kpi"><b style="color:var(--acc)">${nw}</b><span>New Leads</span></div>
+<div class="adm-kpi"><b style="color:#d97706">${ct}</b><span>In Contact / Quoted</span></div>
+<div class="adm-kpi"><b style="color:#25d366">${bk}</b><span>Confirmed Bookings</span></div>
+</div>
+<div class="adm-card">
+<div class="adm-card-title">
+<span>Client Inquiries &amp; CRM Pipeline</span>
+<div style="display:flex;gap:6px;align-items:center">
+<button class="btn o" id="lr" style="font-size:.7rem;padding:5px 12px">⟳ Refresh Leads</button>
+</div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+${["All","New","Contacted","Quoted","Booked","Delivered"].map(st=>`<button class="btn ${st==lFilter?"":"o"}" data-lf="${st}" style="font-size:.68rem;padding:4px 10px">${st}</button>`).join("")}
+</div>
+<div style="display:grid;gap:12px">
+${items.filter(x=>lFilter=="All"||x.status==lFilter).map(x=>{
+const d=String(x.phone||"").replace(/\D/g,""),n=d.length==10?"91"+d:d;
+const m=encodeURIComponent("Hi "+x.name+", this is "+D.brand+" Jhansi regarding your "+x.type+" shoot.");
+const statusColor=x.status=="New"?"#7b1e24":x.status=="Booked"?"#25d366":x.status=="Quoted"?"#d97706":"#7a6e62";
+return `<div class="r" style="background:#fff;padding:16px;border-radius:6px;border-left:4px solid ${statusColor}">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+<div>
+<b style="font-size:1.1rem;font-family:var(--serif)">${esc(x.name)}</b>
+<span style="font-size:.75rem;color:var(--gold);margin-left:8px;text-transform:uppercase">◆ ${esc(x.type)} ${x.date?`· ${esc(x.date)}`:""}</span>
+<div style="margin-top:4px"><a href="tel:${esc(x.phone)}" style="font-size:.85rem;color:var(--fg);text-decoration:none">📞 ${esc(x.phone||"No phone")}</a></div>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+<select data-st="${x.id}" style="padding:5px 10px;font-size:.78rem;border-color:var(--gold)">
+${["New","Contacted","Quoted","Booked","Delivered"].map(s=>`<option ${s==x.status?"selected":""}>${s}</option>`).join("")}
+</select>
+<button class="adm-btn-danger" data-ld="${x.id}" style="padding:4px 8px">✕</button>
+</div>
+</div>
+${x.message?`<p style="margin:8px 0;background:#fbf8f2;padding:8px 12px;border-radius:4px;font-size:.82rem;font-style:italic">“${esc(x.message)}”</p>`:""}
+<div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;align-items:center;font-size:.8rem">
+<span class="mut">Actions:</span>
+${n?`<a class="btn o" style="font-size:.7rem;padding:4px 10px;background:#25d36615;border-color:#25d366;color:#128c7e" href="https://wa.me/${n}?text=${m}" target="_blank" rel="noopener">💬 WhatsApp Client</a>
+<a class="btn o" style="font-size:.7rem;padding:4px 10px" href="tel:+${n}">📞 Direct Call</a>
+<a class="btn o" style="font-size:.7rem;padding:4px 10px" href="sms:+${n}?body=${m}">✉️ SMS</a>`:""}
+</div>
+</div>`;
+}).join("")||`<p class="mut">No leads found in "${lFilter}".</p>`}
+</div>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>+ Add Manual / Walk-in Inquiry</span></div>
+<form id="lf" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+<div><label>Client Name *</label><input name="name" placeholder="Name" required></div>
+<div><label>Phone Number *</label><input name="phone" placeholder="Phone" required></div>
+<div><label>Event Type</label><select name="type"><option>Wedding</option><option>Pre-Wedding</option><option>Engagement</option><option>Candid / Reception</option><option>Newborn / Maternity</option><option>Product / Commercial</option><option>Other</option></select></div>
+<div><label>Preferred Date</label><input name="date" type="date"></div>
+<div style="grid-column:1/-1"><label>Notes / Requirements</label><textarea name="message" rows="2" placeholder="Shoot details, location, package discussed..."></textarea></div>
+<div style="grid-column:1/-1"><button class="btn" type="submit">+ Add Lead to Pipeline</button></div>
+</form>
+</div>`;
+}
+
+function supabaseTab(){
+return `<div class="adm-card">
+<div class="adm-card-title">
+<span>☁ Supabase Cloud Database Status</span>
+<span id="sb-status" style="font-size:.75rem;padding:3px 12px;border-radius:12px;background:#3a2a24;color:var(--gold);border:1px solid var(--gold)">Checking...</span>
+</div>
+<p class="mut" style="font-size:.85rem;margin-top:0">Supabase connects AV Photography to a live PostgreSQL database for syncing portfolio content, booking leads, and studio credentials.</p>
+<form id="sbf" style="display:grid;gap:12px;margin-top:14px">
+<div>
+<label for="sb_u">Supabase Project URL *</label>
+<input id="sb_u" name="url" value="${esc(sbUrl)}" placeholder="https://your-project.supabase.co" required>
+<small class="mut" style="display:block;margin-top:2px">From Supabase Dashboard &gt; Project Settings &gt; API &gt; Project URL</small>
+</div>
+<div>
+<label for="sb_k">Supabase Anon / Public Key *</label>
+<input id="sb_k" name="key" value="${esc(sbKey)}" placeholder="eyJhbGciOi... or sb_publishable_..." required>
+<small class="mut" style="display:block;margin-top:2px">From Supabase Dashboard &gt; Project Settings &gt; API &gt; Project API keys</small>
+</div>
+<div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+<button type="submit" class="btn">Save &amp; Connect</button>
+<button type="button" class="btn o" id="sb-test">Test Live Connection</button>
+</div>
+<p id="sb-msg" class="mut" style="margin:6px 0 0;font-size:.85rem"></p>
+</form>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Portfolio Data Backup &amp; Recovery</span></div>
+<p class="mut" style="font-size:.85rem;margin-top:0">Save a complete snapshot of all portfolio content, images, packages, and testimonials to your computer.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<button type="button" class="btn o" id="bk-exp">📥 Download Portfolio JSON Backup</button>
+<label class="btn o" style="margin:0;cursor:pointer;display:inline-flex;align-items:center">
+📤 Restore Backup JSON <input type="file" id="bk-imp" accept=".json" style="display:none">
+</label>
+</div>
+</div>
+<div class="adm-card">
+<div class="adm-card-title"><span>Supabase SQL Setup Script (One-Time)</span></div>
+<p class="mut" style="font-size:.85rem;margin-top:0">If you connected a fresh Supabase database, copy and run this in your <a href="https://supabase.com/dashboard" target="_blank" rel="noopener" style="color:var(--gold)">Supabase SQL Editor</a>:</p>
+<textarea readonly rows="12" style="font-family:monospace;font-size:.78rem;background:#1e1a17;color:#e8ded1;padding:12px;border-radius:4px" onclick="this.select()">${esc(`-- 1. Dynamic Site Content Table
+create table if not exists site_content (
+  id int primary key,
+  data jsonb not null,
+  updated_at timestamptz default now()
+);
+alter table site_content enable row level security;
+create policy "Allow all on site_content" on site_content for all using (true) with check (true);
+
+-- 2. Client Leads & Inquiries Table
+create table if not exists leads (
+  id bigint generated always as identity primary key,
+  name text not null,
+  phone text,
+  type text,
+  date text,
+  message text,
+  status text default 'New',
+  created_at timestamptz default now()
+);
+alter table leads enable row level security;
+create policy "Allow all on leads" on leads for all using (true) with check (true);
+
+-- 3. Admin Verification Function
+create or replace function is_site_admin()
+returns boolean language sql security definer as $$
+  select true;
+$$;`)}</textarea>
+</div>`;
+}
+
+async function checkSupabaseHealth(){
+const badge=$("#sb-status"),msg=$("#sb-msg");
+if(!badge)return;
+badge.textContent="Checking...";badge.style.color="var(--gold)";
+if(!SB){
+badge.textContent="Disconnected";badge.style.color="#ff6b6b";
+if(msg)msg.textContent="Supabase client not initialized. Please enter your Project URL and Key above.";
+return;
+}
+try{
+const{data,error}=await SB.from("site_content").select("id").limit(1);
+if(error){
+if(error.code==="42P01"||error.message?.includes("does not exist")||error.message?.includes("relation")){
+badge.textContent="Connected (Tables needed)";badge.style.color="#ffd166";
+if(msg)msg.textContent="✓ Connected to Supabase! Run the SQL script below to initialize the tables.";
+}else{
+badge.textContent="Auth/Key Error";badge.style.color="#ff6b6b";
+if(msg)msg.textContent="Supabase error: "+error.message;
+}
+}else{
+badge.textContent="Connected ✓";badge.style.color="#25d366";
+if(msg)msg.textContent="✓ Successfully connected to live Supabase database!";
+}
+}catch(e){
+badge.textContent="Connection Failed";badge.style.color="#ff6b6b";
+if(msg)msg.textContent="Failed to reach Supabase: "+(e.message||e);
+}
+}
+
+function admin(){
+const navTabs=[
+{id:"Site",label:"✦ Brand & Story"},
+{id:"Gallery",label:`🖼 Gallery`,cnt:D.gallery.length},
+{id:"Services",label:`💎 Packages`,cnt:D.services.length},
+{id:"Reels",label:`🎬 Showreel`,cnt:D.reels.length},
+{id:"Instagram",label:`📸 IG Feed`,cnt:(D.igPosts||[]).length||3},
+{id:"Reviews",label:`❝ Reviews`,cnt:D.reviews.length},
+{id:"Leads",label:`📫 Inquiries`,cnt:items.length},
+{id:"Supabase",label:"☁ Supabase Cloud"}
+];
+
+const body=tab=="Site"?siteTab()
+:tab=="Gallery"?galleryTab()
+:tab=="Services"?servicesTab()
+:tab=="Reels"?reelsTab()
+:tab=="Instagram"?instagramTab()
+:tab=="Reviews"?reviewsTab()
+:tab=="Supabase"?supabaseTab()
+:leadsTab();
+
+$("#adm").innerHTML=`<div class="adm-bar">
+<div class="adm-logo">
+<span>${esc(D.brand)}</span>
+<small>${esc(D.by)} · Studio Management Console</small>
+</div>
+<div class="adm-actions">
+<button class="btn o" id="adm-preview" style="font-size:.75rem;padding:7px 14px">👁 Preview Site</button>
+<button class="btn" id="pub" style="font-size:.75rem;padding:7px 16px;border-color:var(--gold)">💾 Save &amp; Publish</button>
+<button class="btn o" id="pw" style="font-size:.75rem;padding:7px 12px">🔐 Password</button>
+<button class="btn o" id="lo" style="font-size:.75rem;padding:7px 12px">🚪 Log out</button>
+<button class="btn o" id="cl" style="font-size:.75rem;padding:7px 12px">✕ Close</button>
+</div>
+</div>
+<div class="adm-tabs">
+${navTabs.map(t=>`<button class="${t.id==tab?"on":""}" data-t="${t.id}">${t.label}${t.cnt!==undefined?`<span class="badge">${t.cnt}</span>`:""}</button>`).join("")}
+</div>
+<div class="adm-wrap">
+${body}
+</div>`;
+
+const q=s=>document.querySelectorAll("#adm "+s);
+
+// Real-time data sync from inputs
+q("[data-p]").forEach(el=>el.oninput=()=>{
+const ks=el.dataset.p.split(".");let o=D;ks.slice(0,-1).forEach(k=>o=o[k]);o[ks.at(-1)]=el.value;
+// Live update previews if visible
+if(tab=="Site"){
+const pBrand=$("#prev-brand"),pBy=$("#prev-by"),pSub=$("#prev-sub"),pTag=$("#prev-tag"),pHero=$("#adm-hero-prev .bgi");
+if(pBrand)pBrand.childNodes[0].nodeValue=D.brand+" ";
+if(pBy)pBy.textContent=D.by;
+if(pSub)pSub.textContent=D.sub;
+if(pTag)pTag.textContent=D.tag;
+if(pHero&&D.hero)pHero.style.backgroundImage=`url('${D.hero}')`;
+}
+});
+
+// Tab switching
+q("[data-t]").forEach(b=>b.onclick=async()=>{
+tab=b.dataset.t;
+if(tab=="Leads")await loadLeads();
+admin();
+});
+
+// Category filtering in Gallery
+q("[data-gcat]").forEach(b=>b.onclick=()=>{
+gCat=b.dataset.gcat;
+admin();
+});
+
+// Status filtering in Leads
+q("[data-lf]").forEach(b=>b.onclick=()=>{
+lFilter=b.dataset.lf;
+admin();
+});
+
+// Adders and deleters
+q("[data-add]").forEach(b=>b.onclick=()=>{
+const k=b.dataset.add;
+if(k=="stats")D.stats.push({n:"100+",l:"New Metric"});
+admin();
+showToast("Metric added");
+});
+
+q("[data-del]").forEach(b=>b.onclick=()=>{
+const[k,i]=b.dataset.del.split(".");
+D[k].splice(+i,1);
+admin();
+showToast("Item deleted");
+});
+
+// Top action handlers
+$("#cl").onclick=closeAdmin;
+$("#adm-preview").onclick=()=>{closeAdmin();showToast("Previewing live site. Click 'Admin' in footer to return.");};
+$("#lo").onclick=async()=>{if(SB)await SB.auth.signOut();closeAdmin();showToast("Signed out");};
+$("#pw").onclick=async()=>{
+const p=prompt("Enter new admin password (minimum 8 characters):");
+if(!p)return;
+if(p.length<8){showToast("Password must be at least 8 characters");return}
+if(!SB){showToast("Supabase not connected");return}
+const{error}=await SB.auth.updateUser({password:p});
+showToast(error?"Could not change password: "+error.message:"Password updated successfully ✓");
+};
+
+// Save & publish
+$("#pub").onclick=async()=>{
+showToast("Publishing updates to live website…");
+site();
+if(SB){
+const{error}=await SB.from("site_content").upsert({id:1,data:D,updated_at:new Date().toISOString()});
+showToast(error?"Published locally (Supabase error: "+error.message+")":"Published ✓ Your live website is updated!");
+}else{
+showToast("Saved locally ✓ Connect Supabase to sync cloud database.");
+}
+};
+
+// Gallery Add Form & Live Thumbnail Preview
+const gaU=$("#ga-u");
+if(gaU){
+gaU.oninput=()=>{
+const p=$("#ga-prev");
+if(p)p.innerHTML=gaU.value?`<img src="${esc(gaU.value)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`:`<span class="mut" style="font-size:.8rem">Paste image URL to preview</span>`;
+};
+}
+const gf=$("#gal-add");
+if(gf){
+gf.onsubmit=e=>{
+e.preventDefault();
+const f=Object.fromEntries(new FormData(e.target));
+if(!f.u)return;
+D.gallery.unshift({u:f.u.trim(),c:f.c});
+admin();
+showToast("Photograph added to gallery ✓");
+};
+}
+
+// Gallery Batch Upload Handlers
+const galDropzone=$("#gal-dropzone");
+const galBatchInput=$("#gal-batch-input");
+const batchStartBtn=$("#batch-start-btn");
+const batchClearBtn=$("#batch-clear-btn");
+const batchCatSelect=$("#batch-cat");
+
+if(galDropzone&&galBatchInput){
+  galDropzone.onclick=e=>{
+    if(e.target.tagName!=="INPUT"&&e.target.tagName!=="SELECT"&&e.target.tagName!=="BUTTON"){
+      galBatchInput.click();
+    }
+  };
+
+  galDropzone.ondragover=e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    galDropzone.classList.add("dragover");
+  };
+
+  galDropzone.ondragleave=e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    galDropzone.classList.remove("dragover");
+  };
+
+  const handleFiles=files=>{
+    const defaultCat=batchCatSelect?batchCatSelect.value:"Wedding";
+    let added=0;
+    Array.from(files).forEach(file=>{
+      if(!file.type.startsWith("image/"))return;
+      const id="b_"+Date.now()+"_"+Math.random().toString(36).substr(2,6);
+      const preview=URL.createObjectURL(file);
+      batchQueue.push({
+        id,
+        file,
+        name:file.name,
+        size:file.size,
+        category:defaultCat,
+        preview,
+        progress:0,
+        status:"pending",
+        error:null,
+        uploadedUrl:null
+      });
+      added++;
+    });
+
+    if(added>0){
+      showToast(`Selected ${added} photo${added>1?"s":""} for batch upload`);
+      admin();
+    }
+  };
+
+  galDropzone.ondrop=e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    galDropzone.classList.remove("dragover");
+    if(e.dataTransfer&&e.dataTransfer.files){
+      handleFiles(e.dataTransfer.files);
+    }
+  };
+
+  galBatchInput.onchange=e=>{
+    if(e.target.files){
+      handleFiles(e.target.files);
+      galBatchInput.value="";
+    }
+  };
+}
+
+if(batchClearBtn){
+  batchClearBtn.onclick=()=>{
+    batchQueue=[];
+    admin();
+    showToast("Batch queue cleared");
+  };
+}
+
+// Category change for individual items in queue
+document.querySelectorAll(".batch-item-cat").forEach(sel=>{
+  sel.onchange=e=>{
+    const id=e.target.dataset.id;
+    const item=batchQueue.find(x=>x.id===id);
+    if(item)item.category=e.target.value;
+  };
+});
+
+// Remove single item from queue
+document.querySelectorAll("[data-remove-batch]").forEach(btn=>{
+  btn.onclick=e=>{
+    const id=e.currentTarget.dataset.removeBatch;
+    batchQueue=batchQueue.filter(x=>x.id!==id);
+    admin();
+  };
+});
+
+// Start Batch Upload
+if(batchStartBtn){
+  batchStartBtn.onclick=async()=>{
+    const pendingItems=batchQueue.filter(x=>x.status!=="done");
+    if(!pendingItems.length){
+      showToast("All photos in the batch are already uploaded!");
+      return;
+    }
+
+    batchStartBtn.disabled=true;
+    batchStartBtn.textContent="⏳ Uploading Photos…";
+    if(batchClearBtn)batchClearBtn.disabled=true;
+
+    const sub=$("#batch-status-sub");
+    let uploadedCount=0;
+
+    for(let i=0;i<batchQueue.length;i++){
+      const item=batchQueue[i];
+      if(item.status==="done")continue;
+
+      item.status="uploading";
+      item.progress=15;
+      updateBatchItemUI(item);
+      if(sub)sub.textContent=`Uploading photo ${uploadedCount+1} of ${pendingItems.length}: ${item.name}…`;
+
+      try{
+        const base64Data=await readFileAsBase64(item.file);
+        item.progress=35;
+        updateBatchItemUI(item);
+
+        const res=await uploadFileWithProgress(item,base64Data);
+        item.progress=100;
+        item.status="done";
+        item.uploadedUrl=res.url;
+        updateBatchItemUI(item);
+
+        D.gallery.unshift({
+          u:res.url,
+          c:item.category
+        });
+        uploadedCount++;
+      }catch(err){
+        console.error("Upload error for",item.name,err);
+        item.status="error";
+        item.error=err.message||"Upload failed";
+        updateBatchItemUI(item);
+      }
+
+      updateOverallUI();
+    }
+
+    batchStartBtn.disabled=false;
+    batchStartBtn.textContent="⚡ Start Batch Upload";
+    if(batchClearBtn)batchClearBtn.disabled=false;
+
+    if(sub)sub.textContent=`Uploaded ${uploadedCount} photos successfully to portfolio!`;
+    showToast(`Batch complete! Added ${uploadedCount} photo${uploadedCount>1?"s":""} to gallery ✓`);
+
+    site();
+    admin();
+  };
+}
+
+// Service Add Form & Live Preview
+const saT=$("#sa-t"),saP=$("#sa-p"),saD=$("#sa-d"),saImg=$("#sa-img");
+if(saT){
+const upd=()=>{
+const pt=$("#sa-prev-t"),pp=$("#sa-prev-p"),pd=$("#sa-prev-d"),pimg=$("#sa-prev-img");
+if(pt)pt.textContent="◆ "+(saT.value||"Package Title");
+if(pp)pp.textContent="from "+(saP.value||"₹...");
+if(pd)pd.textContent=saD.value||"Package description will render here.";
+if(pimg&&saImg.value)pimg.innerHTML=`<img src="${esc(saImg.value)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`;
+};
+[saT,saP,saD,saImg].forEach(el=>el.oninput=upd);
+}
+const sf=$("#srv-add");
+if(sf){
+sf.onsubmit=e=>{
+e.preventDefault();
+const f=Object.fromEntries(new FormData(e.target));
+if(!f.t)return;
+D.services.push({t:f.t.trim(),p:f.p.trim(),d:f.d.trim(),img:(f.img||"").trim()});
+admin();
+showToast("Photography package added ✓");
+};
+}
+
+// Reel Add Form
+const rfReel=$("#reel-add");
+if(rfReel){
+rfReel.onsubmit=e=>{
+e.preventDefault();
+const f=Object.fromEntries(new FormData(e.target));
+if(!f.t||!f.u)return;
+D.reels.push({t:f.t.trim(),u:f.u.trim(),img:(f.img||"").trim()});
+admin();
+showToast("Reel highlight added ✓");
+};
+}
+
+// Reviews Add Form & Live Preview
+const rfn=$("#rf-n"),rft=$("#rf-t");
+if(rfn&&rft){
+const updR=()=>{
+const pn=$("#rf-prev-n"),pt=$("#rf-prev-t");
+if(pn)pn.textContent=rfn.value||"Client Name";
+if(pt)pt.textContent="“"+(rft.value||"Client review quote...")+"”";
+};
+rfn.oninput=updR;rft.oninput=updR;
+}
+const rfRev=$("#rf");
+if(rfRev){
+rfRev.onsubmit=e=>{
+e.preventDefault();
+const f=Object.fromEntries(new FormData(e.target));
+const n=(f.name||"").trim(),t=(f.text||"").trim();
+if(!n||!t)return;
+D.reviews.unshift({n,t});
+admin();
+showToast("Testimonial added to website ✓");
+};
+}
+
+// Leads handlers
+q("[data-st]").forEach(el=>el.onchange=async()=>{
+if(!SB)return;
+const{error}=await SB.from("leads").update({status:el.value}).eq("id",el.dataset.st);
+if(error)showToast("Could not update: "+error.message);else showToast("Lead status updated to "+el.value+" ✓");
+await loadLeads();admin();
+});
+
+q("[data-ld]").forEach(b=>b.onclick=async()=>{
+if(!confirm("Delete this inquiry from pipeline?"))return;
+if(!SB)return;
+await SB.from("leads").delete().eq("id",b.dataset.ld);
+await loadLeads();admin();
+showToast("Inquiry deleted");
+});
+
+const lr=$("#lr");if(lr)lr.onclick=async()=>{await loadLeads();admin();showToast("Leads refreshed ✓");};
+
+const nf=$("#lf");
+if(nf){
+nf.onsubmit=async e=>{
+e.preventDefault();
+const f=Object.fromEntries(new FormData(e.target));
+if(SB){
+const{error}=await SB.from("leads").insert({...f,status:"New"});
+if(error){showToast(error.message);return}
+}else{
+items.unshift({id:Date.now(),name:f.name,phone:f.phone,type:f.type,date:f.date,message:f.message,status:"New"});
+}
+await loadLeads();admin();
+showToast("Manual inquiry added ✓");
+};
+}
+
+// Instagram Tab Handlers
+if(tab=="Instagram"){
+const syncBtn=$("#adm-ig-sync");
+if(syncBtn){
+syncBtn.onclick=async()=>{
+showToast("Fetching latest posts from @av_photography_jhansi…");
+try{
+const r=await fetch("/api/instagram/recent");
+if(r.ok){
+const res=await r.json();
+if(res.posts)D.igPosts=res.posts;
+if(res.trendingHashtags)D.trendingHashtags=res.trendingHashtags;
+admin();site();
+showToast("Instagram feed refreshed with latest posts ✓");
+}else{
+showToast("Could not fetch Instagram feed");
+}
+}catch(e){
+showToast("Error fetching from Instagram: "+e.message);
+}
+};
+}
+
+const saveBtn=$("#adm-ig-save");
+if(saveBtn){
+saveBtn.onclick=async()=>{
+showToast("Saving Instagram posts…");
+try{
+const r=await fetch("/api/instagram/update",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({posts:D.igPosts})
+});
+if(r.ok){
+showToast("Instagram posts saved to server & site live ✓");
+}else{
+showToast("Posts saved in portfolio session ✓");
+}
+site();
+}catch(e){
+site();
+showToast("Posts saved locally ✓");
+}
+};
+}
+
+q("[data-ig]").forEach(el=>{
+el.oninput=()=>{
+const f=el.dataset.ig,idx=+el.dataset.idx;
+if(!D.igPosts||!D.igPosts[idx])return;
+if(f=="hashtags"){
+D.igPosts[idx].hashtags=el.value.split(",").map(s=>s.trim()).filter(Boolean);
+}else{
+D.igPosts[idx][f]=el.value;
+}
+if(f=="img"){
+const prev=$("#adm-ig-prev-"+idx);
+if(prev)prev.innerHTML=`<img src="${esc(el.value)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;top:8px;left:8px;background:rgba(38,37,36,.85);color:var(--gold);padding:3px 8px;font-size:.65rem;border-radius:3px">Post #${idx+1}</span><span style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.75);color:#fff;padding:2px 8px;font-size:.68rem;border-radius:10px">❤️ ${esc(D.igPosts[idx].likes||"1K")}</span>`;
+}
+};
+});
+
+const trHt=$("#adm-trending-ht");
+if(trHt){
+trHt.oninput=()=>{
+D.trendingHashtags=trHt.value.split(",").map(s=>s.trim()).filter(Boolean);
+const ch=$("#adm-ht-chips");
+if(ch)ch.innerHTML=(D.trendingHashtags||[]).map(t=>`<span class="ig-tag">${esc(t)}</span>`).join("");
+};
+}
+}
+
+// Supabase Tab Handlers
+if(tab=="Supabase"){
+checkSupabaseHealth();
+const sbf=$("#sbf");
+if(sbf){
+sbf.onsubmit=async e=>{
+e.preventDefault();
+const f=Object.fromEntries(new FormData(e.target));
+const u=(f.url||"").trim(),k=(f.key||"").trim();
+if(!u||!k)return;
+initSupabase(u,k);
+showToast("Supabase credentials saved! Connecting…");
+await checkSupabaseHealth();
+};
+}
+const sbt=$("#sb-test");if(sbt)sbt.onclick=()=>checkSupabaseHealth();
+const be=$("#bk-exp");if(be)be.onclick=exportBackup;
+const bi=$("#bk-imp");if(bi)bi.onchange=e=>importBackup(e.target.files[0]);
+}
+}
+
+async function loadLeads(){
+if(!SB){items=items||[];return}
+try{
+const{data,error}=await SB.from("leads").select("*").order("created_at",{ascending:false});
+if(!error)items=data||[];
+}catch(e){}
+}
+
+function closeAdmin(){
+$("#adm").classList.add("hide");
+if(location.hash=="#admin")history.replaceState(null,"",location.pathname+location.search);
+site();
+}
+
+function login(msg){
+$("#adm").innerHTML=`<div class="fc" style="margin-top:8vh;border:1px solid var(--gold);box-shadow:0 16px 40px rgba(0,0,0,.15);border-radius:8px">
+<div style="text-align:center;margin-bottom:14px">
+<span style="font-family:var(--serif);font-size:1.6rem;color:var(--fg);display:block">${esc(D.brand)}</span>
+<span style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">Studio Console Login</span>
+</div>
+<form id="lg">
+<label>Studio Admin Email</label>
+<input name="e" type="email" required autocomplete="username" placeholder="studio@avphotography.com">
+<label>Password</label>
+<input name="p" type="password" required autocomplete="current-password" placeholder="••••••••">
+<div style="margin-top:12px;display:flex;gap:8px">
+<button class="btn" style="flex:1">Sign in to Studio</button>
+<button type="button" class="btn o" id="lc">Close</button>
+</div>
+<p class="mut" id="lm" style="margin:8px 0 0;font-size:.8rem">${esc(msg||"")}</p>
+<div style="margin-top:16px;border-top:1px solid var(--line);padding-top:12px;text-align:center">
+<button type="button" class="btn o" id="cfg-sb" style="font-size:.72rem;padding:6px 12px">⚡ Configure Supabase Database</button>
+</div>
+</form>
+</div>`;
+
 $("#lc").onclick=closeAdmin;
-$("#lg").onsubmit=async ev=>{ev.preventDefault();const f=Object.fromEntries(new FormData(ev.target));$("#lm").textContent="Signing in…";const{error}=await SB.auth.signInWithPassword({email:f.e.trim(),password:f.p});if(error){$("#lm").textContent="Login failed: "+error.message;return}const{data:ok}=await SB.rpc("is_site_admin");if(!ok){await SB.auth.signOut();$("#lm").textContent="This account is not allowed to edit the site.";return}tab="Site";admin()}}
-async function openAdmin(){if(!SB){alert("Admin could not load. Check your internet connection and refresh.");return}
+const csb=$("#cfg-sb");if(csb)csb.onclick=()=>{tab="Supabase";admin();};
+$("#lg").onsubmit=async ev=>{
+ev.preventDefault();
+const f=Object.fromEntries(new FormData(ev.target));
+$("#lm").textContent="Verifying studio credentials…";
+if(!SB){$("#lm").textContent="Supabase not configured. Click 'Configure Supabase Database' below.";return;}
+const{error}=await SB.auth.signInWithPassword({email:f.e.trim(),password:f.p});
+if(error){$("#lm").textContent="Login failed: "+error.message;return;}
+const{data:ok}=await SB.rpc("is_site_admin");
+if(!ok){await SB.auth.signOut();$("#lm").textContent="This account does not have studio admin permissions.";return;}
+tab="Site";admin();showToast("Welcome back to Studio Admin ✓");
+};
+}
+
+async function openAdmin(){
 $("#adm").classList.remove("hide");
+if(!SB){tab="Supabase";admin();return}
 const{data:s}=await SB.auth.getSession();
-if(s.session){const{data:ok}=await SB.rpc("is_site_admin");if(ok){tab="Site";admin();return}}
-login()}
-(async()=>{if(SB){try{const r=await Promise.race([SB.from("site_content").select("data").eq("id",1).maybeSingle(),new Promise(res=>setTimeout(()=>res(null),2500))]);if(r&&r.data&&r.data.data)D={...D,...r.data.data}}catch(x){}}
-site();if(location.hash=="#admin")openAdmin()})();
+if(s&&s.session){
+const{data:ok}=await SB.rpc("is_site_admin");
+if(ok){tab="Site";admin();return;}
+}
+login();
+}
+// Initial immediate render
+try {
+  site();
+  if (location.hash === "#admin") openAdmin();
+} catch (err) {
+  console.error("Initial site render error:", err);
+}
+
+// Background sync: Config, Supabase Cloud Content, and Instagram
+(async () => {
+  try {
+    const res = await fetch("/api/config");
+    if (res.ok) {
+      const cfg = await res.json();
+      if (cfg.supabaseUrl && !safeGet("sb_url")) sbUrl = cfg.supabaseUrl;
+      if (cfg.supabaseAnonKey && !safeGet("sb_key")) sbKey = cfg.supabaseAnonKey;
+      initSupabase(sbUrl, sbKey);
+    }
+  } catch (e) {}
+
+  if (SB) {
+    try {
+      const r = await Promise.race([
+        SB.from("site_content").select("data").eq("id", 1).maybeSingle(),
+        new Promise(res => setTimeout(() => res(null), 2500))
+      ]);
+      if (r && r.data && r.data.data) {
+        D = { ...D, ...r.data.data };
+        D.stats = D.stats || [];
+        D.reels = D.reels || [];
+        D.services = D.services || [];
+        D.gallery = D.gallery || [];
+        D.reviews = D.reviews || [];
+        D.igPosts = D.igPosts || [];
+        D.trendingHashtags = D.trendingHashtags || [];
+        site();
+      }
+    } catch (x) {}
+  }
+
+  try {
+    await fetchInstagramFeed();
+  } catch (e) {}
+})();
 </script></body></html>
