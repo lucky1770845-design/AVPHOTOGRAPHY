@@ -1,0 +1,8 @@
+{
+  "name": "AV Photography, Jhansi",
+  "description": "Luxury photography studio in Jhansi specializing in weddings, pre-weddings, portraits, and event films.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

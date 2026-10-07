@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><title>AV Photography, Jhansi</title>
+<meta name="description" content="Luxury photography studio in Jhansi specializing in weddings, pre-weddings, portraits, and event films.">
+<meta property="og:title" content="AV Photography, Jhansi">
+<meta property="og:description" content="Luxury photography studio in Jhansi specializing in weddings, pre-weddings, portraits, and event films.">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -88,11 +91,23 @@ function save(){}
 // ---------- admin ----------
 const F=(path,label,ta)=>{const v=path.split(".").reduce((o,k)=>o[k],D);return `<label>${label}</label>${ta?`<textarea rows="4" data-p="${path}">${esc(v)}</textarea>`:`<input data-p="${path}" value="${esc(v)}">`}`};
 const LIST=(k,title,fs,blank)=>`<h3>${title}</h3>${D[k].map((x,i)=>`<div class="r">${fs.map(([f,l])=>F(k+"."+i+"."+f,l)).join("")}<button class="btn o" data-del="${k}.${i}">Delete</button></div>`).join("")}<button class="btn o" data-add="${k}">+ Add</button>`;
+function reviewsTab(){
+return `<h3>Customer Reviews &amp; Testimonials</h3><p class="mut">Manage existing client testimonials or use the dedicated form below to manually add new ones.</p>${D.reviews&&D.reviews.length?D.reviews.map((r,i)=>`<div class="r"><label>Client Name</label><input data-p="reviews.${i}.n" value="${esc(r.n)}" placeholder="Client Name"><label>Review Text</label><textarea rows="3" data-p="reviews.${i}.t" placeholder="Review text">${esc(r.t)}</textarea><div style="text-align:right;margin-top:6px"><button class="btn o" data-del="reviews.${i}">Delete</button></div></div>`).join(""):`<p class="mut">No reviews yet.</p>`}
+<div class="fc" style="margin:24px 0 16px;max-width:100%">
+<h3 style="margin-top:0">Add New Testimonial</h3>
+<p class="mut" style="font-size:.8rem;margin-top:-6px;margin-bottom:12px">Manually add a review from a client (e.g. from WhatsApp, Google, or direct message).</p>
+<form id="rf">
+<label for="rf-n">Client's Name *</label>
+<input id="rf-n" name="name" placeholder="e.g. Priya &amp; Aman" required>
+<label for="rf-t">Review Text *</label>
+<textarea id="rf-t" name="text" rows="4" placeholder="e.g. AV Photography captured every moment so beautifully! Highly recommended..." required></textarea>
+<div style="margin-top:10px"><button class="btn" type="submit">+ Add Testimonial</button></div>
+</form></div>`}
 function admin(){
 const body=tab=="Site"?[["brand","Brand name"],["by","Name line under brand (e.g. by Girish / city)"],["tag","Tagline"],["sub","Small text above title"],["hero","Hero background image URL"],["video","Showreel video URL (.mp4 link)"],["phone","WhatsApp / phone (with country code)"],["email","Email"],["address","Address"],["insta","Instagram URL"],["yt","YouTube URL"],["fb","Facebook URL"]].map(a=>F(...a)).join("")+F("about","About text",1)+LIST("stats","Stats",[["n","Number"],["l","Label"]])+LIST("reels","Reels",[["t","Title"],["u","Link (YouTube etc.)"],["img","Thumbnail URL"]])
 :tab=="Services"?LIST("services","Services",[["t","Title"],["d","Description"],["p","Price"],["img","Image URL"]])
 :tab=="Gallery"?LIST("gallery","Photos",[["u","Image URL"],["c","Category"]])
-:tab=="Reviews"?LIST("reviews","Reviews",[["n","Name"],["t","Review"]])
+:tab=="Reviews"?reviewsTab()
 :leads();
 $("#adm").innerHTML=`<div class="top"><button class="btn" id="pub">Save &amp; publish</button><button class="btn o" id="cl">Close</button><button class="btn o" id="lo">Log out</button><button class="btn o" id="pw">Password</button>${["Site","Services","Gallery","Reviews","Leads"].map(t=>`<button class="btn ${t==tab?"":"o"}" data-t="${t}">${t}</button>`).join("")}</div><p class="mut" id="msg">Changes go live only after Save &amp; publish. Paste image links (e.g. from Google Drive/Instagram CDN/ImgBB).</p>${body}`;
 const q=s=>document.querySelectorAll("#adm "+s);
@@ -108,6 +123,7 @@ q("[data-st]").forEach(el=>el.onchange=async()=>{const{error}=await SB.from("lea
 q("[data-ld]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete this lead?"))return;await SB.from("leads").delete().eq("id",b.dataset.ld);await loadLeads();admin()});
 const lr=$("#lr");if(lr)lr.onclick=async()=>{await loadLeads();admin()};
 const nf=$("#lf");if(nf)nf.onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const{error}=await SB.from("leads").insert({...f,status:"New"});if(error){alert(error.message);return}await loadLeads();admin()};
+const rf=$("#rf");if(rf)rf.onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const n=(f.name||"").trim(),t=(f.text||"").trim();if(!n||!t)return;if(!Array.isArray(D.reviews))D.reviews=[];D.reviews.push({n,t});$("#msg").textContent="Testimonial added! Click 'Save & publish' to make changes live.";admin()};
 }
 const ST=["New","Contacted","Quoted","Booked","Delivered"];
 async function loadLeads(){const{data}=await SB.from("leads").select("*").order("created_at",{ascending:false});items=data||[]}
