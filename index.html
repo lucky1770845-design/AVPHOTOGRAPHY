@@ -247,9 +247,15 @@ if(sp)sp.style.animation="";
 };
 }
 $("#enq").onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+const newLead={id:Date.now(),name:f.n,phone:f.p,type:f.t,date:f.d||"",message:f.m||"",status:"New",created_at:new Date().toISOString()};
+items.unshift(newLead);
+try{safeSet("av_leads",JSON.stringify(items));}catch(_){}
 if(SB)SB.from("leads").insert({name:f.n,phone:f.p,type:f.t,date:f.d||"",message:f.m||"",status:"New"}).then(()=>{},()=>{});
+showToast("Thank you! Your enquiry has been received. ✨");
 const u=wa(`Hi! I'm ${f.n} (${f.p}). Enquiry for ${f.t}${f.d?" on "+f.d:""}. ${f.m}`);
-if(u.startsWith("http"))window.open(u,"_blank");else alert("Thank you! We have received your enquiry and will contact you soon.");
+if(u.startsWith("http")){
+  const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";a.click();
+}
 e.target.reset()};
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12,rootMargin:"0px 0px -30px 0px"});document.querySelectorAll(".sec-header, .rv").forEach(el=>io.observe(el));
 }
@@ -1073,7 +1079,8 @@ $("#cl").onclick=closeAdmin;
 $("#adm-preview").onclick=()=>{closeAdmin();showToast("Previewing live site. Click 'Admin' in footer to return.");};
 $("#lo").onclick=async()=>{if(SB)await SB.auth.signOut();closeAdmin();showToast("Signed out");};
 $("#pw").onclick=async()=>{
-const p=prompt("Enter new admin password (minimum 8 characters):");
+let p="";
+try{p=prompt("Enter new admin password (minimum 8 characters):");}catch(_){}
 if(!p)return;
 if(p.length<8){showToast("Password must be at least 8 characters");return}
 if(!SB){showToast("Supabase not connected");return}
@@ -1084,10 +1091,11 @@ showToast(error?"Could not change password: "+error.message:"Password updated su
 // Save & publish
 $("#pub").onclick=async()=>{
 showToast("Publishing updates to live website…");
+try{safeSet("av_site_data",JSON.stringify(D));}catch(_){}
 site();
 if(SB){
 const{error}=await SB.from("site_content").upsert({id:1,data:D,updated_at:new Date().toISOString()});
-showToast(error?"Published locally (Supabase error: "+error.message+")":"Published ✓ Your live website is updated!");
+showToast(error?"Saved locally (Supabase: "+error.message+")":"Published ✓ Your live website is updated!");
 }else{
 showToast("Saved locally ✓ Connect Supabase to sync cloud database.");
 }
@@ -1335,16 +1343,26 @@ showToast("Testimonial added to website ✓");
 
 // Leads handlers
 q("[data-st]").forEach(el=>el.onchange=async()=>{
-if(!SB)return;
-const{error}=await SB.from("leads").update({status:el.value}).eq("id",el.dataset.st);
-if(error)showToast("Could not update: "+error.message);else showToast("Lead status updated to "+el.value+" ✓");
+const targetId=el.dataset.st;
+const item=items.find(x=>String(x.id)===String(targetId));
+if(item){item.status=el.value;try{safeSet("av_leads",JSON.stringify(items));}catch(_){}}
+if(SB){
+const{error}=await SB.from("leads").update({status:el.value}).eq("id",targetId);
+if(error)showToast("Could not update in cloud: "+error.message);else showToast("Lead status updated to "+el.value+" ✓");
+}else{
+showToast("Lead status updated to "+el.value+" ✓");
+}
 await loadLeads();admin();
 });
 
 q("[data-ld]").forEach(b=>b.onclick=async()=>{
-if(!confirm("Delete this inquiry from pipeline?"))return;
-if(!SB)return;
-await SB.from("leads").delete().eq("id",b.dataset.ld);
+let ok=true;
+try{ok=confirm("Delete this inquiry from pipeline?");}catch(_){ok=true;}
+if(!ok)return;
+const targetId=b.dataset.ld;
+items=items.filter(x=>String(x.id)!==String(targetId));
+try{safeSet("av_leads",JSON.stringify(items));}catch(_){}
+if(SB)await SB.from("leads").delete().eq("id",targetId);
 await loadLeads();admin();
 showToast("Inquiry deleted");
 });
@@ -1356,11 +1374,12 @@ if(nf){
 nf.onsubmit=async e=>{
 e.preventDefault();
 const f=Object.fromEntries(new FormData(e.target));
+const manualLead={id:Date.now(),name:f.name,phone:f.phone,type:f.type,date:f.date,message:f.message,status:"New",created_at:new Date().toISOString()};
+items.unshift(manualLead);
+try{safeSet("av_leads",JSON.stringify(items));}catch(_){}
 if(SB){
 const{error}=await SB.from("leads").insert({...f,status:"New"});
 if(error){showToast(error.message);return}
-}else{
-items.unshift({id:Date.now(),name:f.name,phone:f.phone,type:f.type,date:f.date,message:f.message,status:"New"});
 }
 await loadLeads();admin();
 showToast("Manual inquiry added ✓");
@@ -1461,10 +1480,11 @@ const bi=$("#bk-imp");if(bi)bi.onchange=e=>importBackup(e.target.files[0]);
 }
 
 async function loadLeads(){
+try{const saved=safeGet("av_leads");if(saved){const p=JSON.parse(saved);if(Array.isArray(p))items=p;}}catch(_){}
 if(!SB){items=items||[];return}
 try{
 const{data,error}=await SB.from("leads").select("*").order("created_at",{ascending:false});
-if(!error)items=data||[];
+if(!error&&data&&data.length){items=data;try{safeSet("av_leads",JSON.stringify(items));}catch(_){}}
 }catch(e){}
 }
 
@@ -1523,6 +1543,20 @@ login();
 }
 // Initial immediate render
 try {
+  const localD = safeGet("av_site_data");
+  if (localD) {
+    const parsed = JSON.parse(localD);
+    if (parsed && typeof parsed === "object") {
+      D = { ...D, ...parsed };
+      D.stats = D.stats || [];
+      D.reels = D.reels || [];
+      D.services = D.services || [];
+      D.gallery = D.gallery || [];
+      D.reviews = D.reviews || [];
+      D.igPosts = D.igPosts || [];
+      D.trendingHashtags = D.trendingHashtags || [];
+    }
+  }
   site();
   if (location.hash === "#admin") openAdmin();
 } catch (err) {
