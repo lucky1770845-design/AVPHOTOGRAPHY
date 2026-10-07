@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>AV Photography, Jhansi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f8f1e6;--fg:#2b2420;--mut:#7a6e62;--card:#fffaf2;--line:#e4d6bf;--acc:#7b1e24;--gold:#c49a4a;--dk:#262524;--serif:"Playfair Display",Georgia,serif}
+:root:not([data-theme="light"]){}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:56px}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 "DM Sans",system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:var(--serif);font-weight:500}a{color:var(--acc)}
+header{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(248,241,230,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding-left:16px;padding-right:16px;height:calc(48px + env(safe-area-inset-top,0px))}
+.logo{font-family:var(--serif);text-decoration:none;color:var(--fg);font-size:1.05rem}.logo small{display:block;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-top:-4px}
+#bg{background:none;border:0;font-size:1.4rem;color:var(--fg);cursor:pointer}
+#mn{position:absolute;top:100%;left:0;right:0;background:var(--bg);display:none;flex-direction:column;border-bottom:1px solid var(--line)}#mn.open{display:flex;animation:fd .3s}
+#mn a{padding:12px 20px;text-decoration:none;color:var(--fg);border-top:1px solid var(--line)}
+@keyframes fd{from{opacity:0;transform:translateY(-8px)}}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden;background:#3a2a24}
+.hero .bgi{position:absolute;inset:0;background-size:cover;background-position:center;animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.12)}}
+.hero .ov{position:absolute;inset:0;background:linear-gradient(#0006,#000a)}
+.hc{position:relative;padding:20px;animation:up 1.2s both}
+.hc h1{font-size:clamp(2.8rem,13vw,5.5rem);line-height:1;margin:.1em 0}.hc i{display:block;font-size:.4em;color:var(--gold);font-family:var(--serif)}
+.hc p{letter-spacing:.12em;font-size:.78rem;text-transform:uppercase;opacity:.9}
+@keyframes up{from{opacity:0;transform:translateY(30px)}}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:1px solid var(--acc);padding:11px 22px;text-decoration:none;cursor:pointer;font:inherit;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;transition:.3s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px #7b1e2440}
+.btn.o{background:none;color:var(--acc)}.hero .btn.o{color:#fff;border-color:#fff}
+section{max-width:1000px;margin:0 auto;padding:56px 18px}.c{text-align:center}
+.eyebrow{color:var(--gold);letter-spacing:.25em;text-transform:uppercase;font-size:.68rem}
+h2{font-size:clamp(1.7rem,6vw,2.4rem);margin:.2em 0 .5em}.rule{width:60px;height:1px;background:var(--gold);margin:0 auto 20px}
+.mut{color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:24px}.stats div{border:1px solid var(--line);padding:12px;text-align:center}.stats b{display:block;font:500 1.6rem var(--serif);color:var(--gold)}.stats span{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mut)}
+.dark{background:var(--dk);color:#f3ece2;max-width:none}.dark>div{max-width:1000px;margin:0 auto}
+.phone{width:min(230px,66vw);aspect-ratio:9/19;border:7px solid #0c0c0c;border-radius:30px;overflow:hidden;margin:20px auto;box-shadow:0 0 0 1px #444,0 25px 60px #000a;background:#111}.phone video,.phone img{width:100%;height:100%;object-fit:cover;display:block}
+.reels{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.reels a{flex:0 0 130px;scroll-snap-align:start;aspect-ratio:9/16;position:relative;border-radius:4px;overflow:hidden;background:#3a3633;color:#fff;text-decoration:none;font-size:.7rem}
+.reels img{width:100%;height:100%;object-fit:cover}.reels span{position:absolute;left:6px;right:6px;bottom:6px;text-shadow:0 1px 4px #000}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);overflow:hidden;transition:.4s}.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px #0001}.card .b{padding:16px}.card h3{margin:0 0 4px;font-size:1.2rem}.card h3:before{content:"◆ ";color:var(--gold);font-size:.6em}
+.ph{aspect-ratio:4/3;background:linear-gradient(135deg,#e4d6bf,#f1e6d3);width:100%}
+.tabs{display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}.tabs button{background:none;border:0;border-bottom:1px solid transparent;font:inherit;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mut);padding:6px 10px;cursor:pointer}.tabs .on{color:var(--acc);border-color:var(--gold)}
+.mas{columns:2 150px;column-gap:8px}.mas>*{width:100%;margin:0 0 8px;break-inside:avoid;display:block;border-radius:3px}.mas img{height:auto}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s,transform .9s}.rv.in{opacity:1;transform:none}
+input,textarea,select{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);padding:9px;width:100%}
+form{display:grid;gap:10px}.fc{background:var(--card);border:1px solid var(--line);padding:20px;max-width:560px;margin:0 auto}
+label{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:6px 0 2px}
+footer{background:var(--dk);color:#d9cfc1;padding:36px 18px;font-size:.85rem}footer a{color:var(--gold)}
+#wa{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:19;width:48px;height:48px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.4rem;box-shadow:0 4px 14px #0004;animation:pl 2.4s infinite}
+@keyframes pl{50%{box-shadow:0 0 0 12px #25d36622}}
+#fab{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:25}
+#adm{position:fixed;inset:0;background:var(--bg);z-index:40;overflow:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 80px}
+.hide{display:none!important}.r{display:grid;gap:6px;border:1px solid var(--line);padding:10px;margin-bottom:8px}
+.adm label{margin-top:8px}.top{display:flex;gap:6px;position:sticky;top:0;background:var(--bg);padding:6px 0;flex-wrap:wrap;z-index:2}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script></head><body>
+<header id="nav"></header><a id="wa" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+<div id="app"></div>
+<div id="adm" class="hide adm"></div>
+<script id="data" type="application/json">{"brand":"AV Photography","by":"Jhansi","tag":"Wedding · Pre-Wedding · Portraits · Events","sub":"Luxury photography in Jhansi","hero":"","video":"","about":"We are a small, soul-led studio in Jhansi crafting cinematic frames that feel like memory itself. Candid meets classical, tradition meets editorial. (Edit this text in Admin.)","phone":"","email":"","address":"Jhansi, Uttar Pradesh","insta":"https://www.instagram.com/av_photography_jhansi","yt":"","fb":"","stats":[{"n":"300+","l":"Shoots"},{"n":"9+","l":"Years"},{"n":"12","l":"Awards"},{"n":"100%","l":"Happy Clients"}],"reels":[{"t":"Bridal Entry","u":"","img":""},{"t":"Pre-Wedding","u":"","img":""},{"t":"Haldi Highlights","u":"","img":""},{"t":"Couple Portraits","u":"","img":""}],"services":[{"t":"Wedding Photography","d":"Full-day cinematic coverage, edited like a feature film.","p":"Custom","img":""},{"t":"Pre-Wedding Shoots","d":"Story-driven shoots at your favourite locations.","p":"Custom","img":""},{"t":"Candid & Events","d":"Documentary-style coverage for sangeet, birthdays and more.","p":"Custom","img":""},{"t":"Portraits & Baby Shoots","d":"Studio and outdoor sessions, gentle and fun.","p":"Custom","img":""},{"t":"Product & Commercial","d":"Clean, sharp images for brands.","p":"Custom","img":""}],"gallery":[{"u":"","c":"Wedding"},{"u":"","c":"Pre-Wedding"},{"u":"","c":"Candid"},{"u":"","c":"Wedding"}],"reviews":[{"n":"Happy Client","t":"Add real client reviews from the Admin panel."}]}</script>
+<script>
+const SB=window.supabase?window.supabase.createClient("https://hbiotxqwhuvwfclesbzf.supabase.co","sb_publishable_rHC2arL3jAKkWButFfxz1Q_hoa16Ve0"):null;
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let D=JSON.parse($("#data").textContent),cat="All",A=null,items=[],col=null,tab="Site";
+const wa=(m)=>{const d=String(D.phone).replace(/\D/g,"");return d?"https://wa.me/"+(d.length==10?"91"+d:d)+"?text="+encodeURIComponent(m):"#contact"};
+const img=(u,c)=>u?`<img class="${c||""}" src="${esc(u)}" alt="" loading="lazy" style="width:100%;object-fit:cover;aspect-ratio:${c=="g"?"3/4":"4/3"};display:block">`:`<div class="ph"></div>`;
+function site(){
+const cats=["All",...new Set(D.gallery.map(g=>g.c).filter(Boolean))];
+$("#nav").innerHTML=`<a class="logo" href="#top">${esc(D.brand)}<small>${esc(D.by)}</small></a><button id="bg" aria-label="Menu">☰</button><div id="mn">${["About","Showreel","Services","Gallery","Reviews","Contact"].map(x=>`<a href="#${x.toLowerCase()}">${x}</a>`).join("")}</div>`;
+$("#wa").href=wa("Hi! I came across your portfolio and would love to enquire about my upcoming shoot.");
+$("#app").innerHTML=`<div class="hero" id="top"><div class="bgi" style="${D.hero?`background-image:url('${esc(D.hero)}')`:""}"></div><div class="ov"></div><div class="hc"><p>${esc(D.sub)}</p><h1>${esc(D.brand)}<i>${esc(D.by)}</i></h1><p>${esc(D.tag)}</p><a class="btn" href="#contact">Book Your Date</a></div></div>
+<section id="about" class="c rv"><div class="eyebrow">The Storyteller</div><h2>About Us</h2><div class="rule"></div><p class="mut" style="white-space:pre-line;max-width:640px;margin:auto">${esc(D.about)}</p><div class="stats">${D.stats.map(x=>`<div><b>${esc(x.n)}</b><span>${esc(x.l)}</span></div>`).join("")}</div></section>
+<section id="showreel" class="dark"><div class="c rv"><div class="eyebrow">Cinematic Highlights</div><h2>Watch Our Latest Cinematic Magic</h2><div class="rule"></div><div class="phone">${D.video?`<video src="${esc(D.video)}" autoplay muted loop playsinline controls></video>`:""}</div><h3 style="text-align:left">More Reels</h3><div class="reels">${D.reels.map(r=>`<a href="${esc(r.u||"#")}" target="_blank" rel="noopener">${r.img?`<img src="${esc(r.img)}" alt="" loading="lazy">`:""}<span>▶ ${esc(r.t)}</span></a>`).join("")}</div></div></section>
+<section id="services"><div class="c rv"><div class="eyebrow">What We Offer</div><h2>Services &amp; Packages</h2><div class="rule"></div></div><div class="grid">${D.services.map(x=>`<div class="card rv">${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block">`:'<div class="ph"></div>'}<div class="b"><h3>${esc(x.t)}</h3><p class="mut">${esc(x.d)}</p><p><i>${x.p?"from ":""}${esc(x.p)}</i></p><a class="btn o" target="_blank" rel="noopener" href="${wa("Hi! I'd like to enquire about "+x.t+".")}">Enquire on WhatsApp</a></div></div>`).join("")}</div></section>
+<section id="gallery"><div class="c rv"><div class="eyebrow">Selected Work</div><h2>The Gallery</h2><div class="rule"></div><div class="tabs">${cats.map(c=>`<button class="${c==cat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("")}</div></div><div class="mas">${D.gallery.filter(g=>cat=="All"||g.c==cat).map((g,i)=>g.u?`<img class="rv" src="${esc(g.u)}" alt="" loading="lazy">`:`<div class="ph rv" style="aspect-ratio:${i%2?"3/4":"1/1"}"></div>`).join("")}</div></section>
+<section id="reviews" class="c"><div class="rv"><div class="eyebrow">Loved by Clients</div><h2>Kind Words, Real Stories</h2><div class="rule"></div></div><div class="grid">${D.reviews.map(r=>`<div class="card rv"><div class="b"><p style="font-family:var(--serif);font-style:italic">“${esc(r.t)}”</p><b class="mut">${esc(r.n)}</b></div></div>`).join("")}</div></section>
+<section id="contact"><div class="c rv"><div class="eyebrow">Let's Create Magic</div><h2>Book Your Date</h2><div class="rule"></div><p class="mut">Dates fill up fast, especially in wedding season. Send a quick enquiry and we'll reply personally within 24 hours.</p></div>
+<div class="fc rv"><form id="enq"><label>Your Name *</label><input name="n" required><label>Phone Number *</label><input name="p" required><label>Event Type</label><select name="t"><option>Wedding</option><option>Pre-Wedding</option><option>Engagement</option><option>Candid / Reception</option><option>Newborn / Maternity</option><option>Product / Commercial</option><option>Other</option></select><label>Preferred Date</label><input name="d" type="date"><label>Tell us about your day</label><textarea name="m" rows="3"></textarea><button class="btn">Send Enquiry</button><a class="btn o" style="text-align:center" target="_blank" rel="noopener" href="${wa("Hi! I'd like to enquire about my upcoming shoot.")}">WhatsApp</a></form></div></section>
+<footer><b style="font-family:var(--serif);font-size:1.2rem;color:#fff">${esc(D.brand)}</b> <span style="color:var(--gold)">${esc(D.by)}</span><p>A boutique studio crafting timeless photographs and films.</p><p>${D.phone?`📞 <a href="tel:${esc(D.phone)}">${esc(D.phone)}</a><br>`:""}${D.email?`✉️ ${esc(D.email)}<br>`:""}📍 ${esc(D.address)} · <a target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(D.address)}">Map</a></p><p>${[["Instagram",D.insta],["YouTube",D.yt],["Facebook",D.fb]].filter(x=>x[1]).map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener">${x[0]}</a>`).join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(D.brand)}. All rights reserved. · <a href="#admin" id="alink">Admin</a></p></footer>`;
+$("#bg").onclick=()=>$("#mn").classList.toggle("open");document.querySelectorAll("#mn a").forEach(a=>a.onclick=()=>$("#mn").classList.remove("open"));
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{cat=b.dataset.c;site()});
+$("#alink").onclick=e=>{e.preventDefault();openAdmin()};
+$("#enq").onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+if(SB)SB.from("leads").insert({name:f.n,phone:f.p,type:f.t,date:f.d||"",message:f.m||"",status:"New"}).then(()=>{},()=>{});
+const u=wa(`Hi! I'm ${f.n} (${f.p}). Enquiry for ${f.t}${f.d?" on "+f.d:""}. ${f.m}`);
+if(u.startsWith("http"))window.open(u,"_blank");else alert("Thank you! We have received your enquiry and will contact you soon.");
+e.target.reset()};
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+}
+function save(){}
+// ---------- admin ----------
+const F=(path,label,ta)=>{const v=path.split(".").reduce((o,k)=>o[k],D);return `<label>${label}</label>${ta?`<textarea rows="4" data-p="${path}">${esc(v)}</textarea>`:`<input data-p="${path}" value="${esc(v)}">`}`};
+const LIST=(k,title,fs,blank)=>`<h3>${title}</h3>${D[k].map((x,i)=>`<div class="r">${fs.map(([f,l])=>F(k+"."+i+"."+f,l)).join("")}<button class="btn o" data-del="${k}.${i}">Delete</button></div>`).join("")}<button class="btn o" data-add="${k}">+ Add</button>`;
+function admin(){
+const body=tab=="Site"?[["brand","Brand name"],["by","Name line under brand (e.g. by Girish / city)"],["tag","Tagline"],["sub","Small text above title"],["hero","Hero background image URL"],["video","Showreel video URL (.mp4 link)"],["phone","WhatsApp / phone (with country code)"],["email","Email"],["address","Address"],["insta","Instagram URL"],["yt","YouTube URL"],["fb","Facebook URL"]].map(a=>F(...a)).join("")+F("about","About text",1)+LIST("stats","Stats",[["n","Number"],["l","Label"]])+LIST("reels","Reels",[["t","Title"],["u","Link (YouTube etc.)"],["img","Thumbnail URL"]])
+:tab=="Services"?LIST("services","Services",[["t","Title"],["d","Description"],["p","Price"],["img","Image URL"]])
+:tab=="Gallery"?LIST("gallery","Photos",[["u","Image URL"],["c","Category"]])
+:tab=="Reviews"?LIST("reviews","Reviews",[["n","Name"],["t","Review"]])
+:leads();
+$("#adm").innerHTML=`<div class="top"><button class="btn" id="pub">Save &amp; publish</button><button class="btn o" id="cl">Close</button><button class="btn o" id="lo">Log out</button><button class="btn o" id="pw">Password</button>${["Site","Services","Gallery","Reviews","Leads"].map(t=>`<button class="btn ${t==tab?"":"o"}" data-t="${t}">${t}</button>`).join("")}</div><p class="mut" id="msg">Changes go live only after Save &amp; publish. Paste image links (e.g. from Google Drive/Instagram CDN/ImgBB).</p>${body}`;
+const q=s=>document.querySelectorAll("#adm "+s);
+q("[data-p]").forEach(el=>el.oninput=()=>{const ks=el.dataset.p.split(".");let o=D;ks.slice(0,-1).forEach(k=>o=o[k]);o[ks.at(-1)]=el.value});
+q("[data-t]").forEach(b=>b.onclick=async()=>{tab=b.dataset.t;if(tab=="Leads")await loadLeads();admin()});
+q("[data-add]").forEach(b=>b.onclick=()=>{const k=b.dataset.add;D[k].push(k=="services"?{t:"New service",d:"",p:"",img:""}:k=="gallery"?{u:"",c:""}:k=="stats"?{n:"",l:""}:k=="reels"?{t:"",u:"",img:""}:{n:"",t:""});admin()});
+q("[data-del]").forEach(b=>b.onclick=()=>{const[k,i]=b.dataset.del.split(".");D[k].splice(+i,1);admin()});
+$("#cl").onclick=closeAdmin;
+$("#lo").onclick=async()=>{await SB.auth.signOut();closeAdmin()};
+$("#pw").onclick=async()=>{const p=prompt("New password (minimum 8 characters):");if(!p)return;if(p.length<8){alert("Too short.");return}const{error}=await SB.auth.updateUser({password:p});$("#msg").textContent=error?"Could not change password: "+error.message:"Password changed ✓"};
+$("#pub").onclick=async()=>{$("#msg").textContent="Publishing…";const{error}=await SB.from("site_content").upsert({id:1,data:D,updated_at:new Date().toISOString()});$("#msg").textContent=error?"Could not publish: "+error.message:"Published ✓ Your website is updated."};
+q("[data-st]").forEach(el=>el.onchange=async()=>{const{error}=await SB.from("leads").update({status:el.value}).eq("id",el.dataset.st);if(error)alert(error.message)});
+q("[data-ld]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete this lead?"))return;await SB.from("leads").delete().eq("id",b.dataset.ld);await loadLeads();admin()});
+const lr=$("#lr");if(lr)lr.onclick=async()=>{await loadLeads();admin()};
+const nf=$("#lf");if(nf)nf.onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const{error}=await SB.from("leads").insert({...f,status:"New"});if(error){alert(error.message);return}await loadLeads();admin()};
+}
+const ST=["New","Contacted","Quoted","Booked","Delivered"];
+async function loadLeads(){const{data}=await SB.from("leads").select("*").order("created_at",{ascending:false});items=data||[]}
+function leads(){
+return `<h3>Leads &amp; Clients</h3><button class="btn o" id="lr">Refresh</button>${items.map(x=>{const d=String(x.phone||"").replace(/\D/g,""),n=d.length==10?"91"+d:d,m=encodeURIComponent("Hi "+x.name+", this is "+D.brand+" regarding your "+x.type+" shoot.");return `<div class="r"><b>${esc(x.name)} <span class="mut">${esc(x.type)} ${esc(x.date||"")}</span></b><span class="mut">${esc(x.phone)}</span>${x.message?`<span class="mut">${esc(x.message)}</span>`:""}<select data-st="${x.id}">${ST.map(s=>`<option ${s==x.status?"selected":""}>${s}</option>`).join("")}</select>${n?`<span><a href="https://wa.me/${n}?text=${m}" target="_blank" rel="noopener">WhatsApp</a> · <a href="sms:+${n}?body=${m}">SMS</a> · <a href="tel:+${n}">Call</a></span>`:""}<button class="btn o" data-ld="${x.id}">Delete</button></div>`}).join("")||'<p class="mut">No leads yet.</p>'}
+<form id="lf"><input name="name" placeholder="Name" required><input name="phone" placeholder="Phone"><select name="type"><option>Wedding</option><option>Pre-Wedding</option><option>Event</option><option>Portrait / Baby</option><option>Product</option></select><input name="date" type="date"><button class="btn">Add lead</button></form>`}
+function closeAdmin(){$("#adm").classList.add("hide");if(location.hash=="#admin")history.replaceState(null,"",location.pathname+location.search);site()}
+function login(msg){$("#adm").innerHTML=`<div class="fc" style="margin-top:10vh"><h3 style="margin-top:0">Admin login</h3><form id="lg"><label>Email</label><input name="e" type="email" required autocomplete="username"><label>Password</label><input name="p" type="password" required autocomplete="current-password"><button class="btn">Sign in</button><button type="button" class="btn o" id="lc">Close</button><p class="mut" id="lm">${esc(msg||"")}</p></form></div>`;
+$("#lc").onclick=closeAdmin;
+$("#lg").onsubmit=async ev=>{ev.preventDefault();const f=Object.fromEntries(new FormData(ev.target));$("#lm").textContent="Signing in…";const{error}=await SB.auth.signInWithPassword({email:f.e.trim(),password:f.p});if(error){$("#lm").textContent="Login failed: "+error.message;return}const{data:ok}=await SB.rpc("is_site_admin");if(!ok){await SB.auth.signOut();$("#lm").textContent="This account is not allowed to edit the site.";return}tab="Site";admin()}}
+async function openAdmin(){if(!SB){alert("Admin could not load. Check your internet connection and refresh.");return}
+$("#adm").classList.remove("hide");
+const{data:s}=await SB.auth.getSession();
+if(s.session){const{data:ok}=await SB.rpc("is_site_admin");if(ok){tab="Site";admin();return}}
+login()}
+(async()=>{if(SB){try{const r=await Promise.race([SB.from("site_content").select("data").eq("id",1).maybeSingle(),new Promise(res=>setTimeout(()=>res(null),2500))]);if(r&&r.data&&r.data.data)D={...D,...r.data.data}}catch(x){}}
+site();if(location.hash=="#admin")openAdmin()})();
+</script></body></html>
